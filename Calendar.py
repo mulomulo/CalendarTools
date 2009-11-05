@@ -11,13 +11,14 @@ import string
 import sys
 
 class Calendar(object):
-  def __init__(self, year, language, cal_name, basedir, bw, feiertage, print_location_in_index, belongs_to, holidays, calendar_caption):
+  def __init__(self, year, language, cal_name, basedir, bw, feiertage, print_location_in_index, belongs_to, holidays, calendar_caption, output_dir):
     #super(Calendar, self).__init__(year, language, cal_name, basedir, bw, feiertage, print_location_in_index, belongs_to, holidays)
     self.year = '2010'
     self.bw = bw
     self.belongs_to = belongs_to
     self.holidays = holidays
-    self.basedir = basedir
+    self.basedir = "%s/%s" %(basedir, self.year)
+    self.output_dir = "%s/%s" %(output_dir, self.year)
     self.print_location_in_index = print_location_in_index
     try:
       self.cal_name = cal_name.split("_")[0]
@@ -31,7 +32,6 @@ class Calendar(object):
       self.region = language.split("-")[1]
     except:
       self.region = self.holidays
-    self.basedir = basedir
     self.feiertage = feiertage
     self.l = []
     self.msg = []
@@ -83,7 +83,7 @@ class Calendar(object):
 
   def get_images_in_folder(self):
     src_folder = "%sSource//%s//%s" %(self.basedir, self.year, self.cal_name)
-    src_folder = "%s/%s" %(self.basedir, self.cal_name)
+    src_folder = "%s/src/%s/" %(self.basedir, self.cal_name.split(".")[0])
     file_list = []
     g = glob.glob("%s//*.jpg" %(src_folder))
     for item in g:
@@ -146,6 +146,7 @@ class Calendar(object):
     self.week_fontsize = 52
     self.mcount = 0
     l = self.l
+    assert self.l is not None
 
     self.imagepaths = []
     for sort, path in l:
@@ -156,6 +157,7 @@ class Calendar(object):
     self.months_txt_l = months
     for sheet in self.l:
       self.month = months[sheet[0]-1]
+      print "Making %s" %self.month
       self.image_src = sheet[1]
       #self.mcount = int(month[0])
       #self.month = month
@@ -286,7 +288,7 @@ class Calendar(object):
       region = self.subset
     else:
       region = self.region
-    image_location = "%s/%s/%i-index-%s.jpg" %(self.basedir, self.belongs_to, 13, self.belongs_to)
+    image_location = "%s/%s/%i-index-%s.jpg" %(self.output_dir, self.belongs_to, 13, self.belongs_to)
     self.image.save("%s" %image_location, "JPEG", quality=100)
 #		image_location = "Calendars/%s/%i-index.png" %(self.cal_name, self.mcount+1)
 #		self.image.save("%s" %image_location, "PNG", quality=95)
@@ -307,7 +309,7 @@ class Calendar(object):
         region = "%s" %self.subset
       else:
         region = self.region
-      self.target_directory = "%sCalendars/%s/%s" %(self.basedir, self.year, self.belongs_to)
+      self.target_directory = "%s/%s" %(self.output_dir, self.belongs_to)
       os.mkdir(self.target_directory)
     except:
       pass
@@ -323,11 +325,11 @@ class Calendar(object):
     else:
       region = self.region
     
-    image_location = r"%sCalendars/%s-%s/%s%i-%s-%s.jpg" %(self.basedir, self.cal_name, self.belongs_to, j, self.mcount, month, self.belongs_to)
+    image_location = r"%s/%s-%s/%s%i-%s-%s.jpg" %(self.output_dir, self.cal_name, self.belongs_to, j, self.mcount, month, self.belongs_to)
     image_location = "%s/%s%i-%s-%s.jpg" %(self.target_directory, j, self.mcount, month, self.belongs_to)
     image_location = "%s/%s%i-%s.jpg" %(self.target_directory, j, self.mcount, self.belongs_to)
     
-    image_path = "%s/%s" %(self.basedir, self.belongs_to)
+    image_path = "%s/%s" %(self.output_dir, self.belongs_to)
     if not os.path.exists(image_path):
       os.mkdir(image_path)
     self.target_directory = "%s/%s%i-%s.jpg" %(image_path, j, self.mcount, self.belongs_to)
@@ -693,65 +695,33 @@ if __name__ == "__main__":
   cal_name = u"Adventures of a-Small Farmer.Johannes.english.de"
 
   
-  cal_name = u"Μόνο λόγια"
-  cal_name = u"Osaka"
+  cal_name = u"Μόνο λόγια.Karen.english.en"
   print_location_in_index = ['location']
-  belongs_to = "Karen"
-  
-  cal_name = u"Osaka"
-  belongs_to = "Werner"
+  calendar_caption = "Hello Rabbit's Friend!"
 
-  
-  cal_name = u"Kati & Anna.Ehmke.english.en"
-  print_location_in_index = []
-  language = "english"
-  holidays = "en"
-  print_location_in_index = []
-  
-  CALENDARS={
-    'Balloon':{'print_location_in_index':['headline', 'location', 'country'],
-               'calendar_caption':'These images were taken during a wonderful 40 minute Balloon Flight in June 2009. More images can be found here'
-               },
-    'Chora':{'print_location_in_index':['headline', 'location', 'country'],
-               'calendar_caption':'These images were taken during a wonderful 40 minute Balloon Flight in June 2009. More images can be found here'
-               }
-    }
-               
-  CALENDAR_OWNERS={
-    'Kati':
-        {cal_name:'Balloon',
-         cal_name:u"Balloon",
-         belongs_to:"Kati",
-         language:"german",
-         holidays:"en"
-         }
-  }               
-              
-  belongs_to_long_list = ['Kati', 'Anna']
-  belongs_to_list = belongs_to_long_list[:1]
+  #cal_name = u"Balloon.Kati.english.en"
+  #print_location_in_index = []
+  #calendar_caption = "Hello Rabbit's Friend!"
+  #print_location_in_index = ['location']
 
-  for belongs_to in belongs_to_list:
+  if "." in cal_name:
+    belongs_to = cal_name.split('.')[1]
+    language = cal_name.split('.')[2]
+  try:
+    holidays = cal_name.split('.')[3]
+  except:
+    holidays = "en"
+  cal_name = cal_name.split('.')[0]  
   
-    cal_name = CALENDAR_OWNERS[belongs_to][cal_name]
-    language = CALENDAR_OWNERS[belongs_to][language]
-    print_location_in_index = CALENDARS[cal_name]['print_location_in_index']
-    calendar_caption = CALENDARS[cal_name]['calendar_caption']
-  
-    if "." in cal_name:
-      belongs_to = cal_name.split('.')[1]
-      language = cal_name.split('.')[2]
-    try:
-      holidays = cal_name.split('.')[3]
-    except:
-      holidays = "en"
-    basedir = 'C:/Users/Horst/Documents/Image Databases/HardLinks/Calendars2010/' 
-    print u"Making %s" %cal_name
-    print u"Making Calendar"
-    year = "2010"
-    bw = False
-    feiertage = True
-    a = Calendar(year = year, language = language, cal_name = cal_name, basedir = basedir, bw = bw, feiertage = feiertage, print_location_in_index = print_location_in_index, belongs_to = belongs_to, holidays = holidays, calendar_caption = calendar_caption)
-    a.run()
+  basedir = 'C:/Users/Horst/Pictures/Output/Calendars/' 
+  output_dir = 'C:/Users/Horst/Pictures/Output/Calendars/' 
+  #print u"Making %s" %cal_name
+  print u"Making Calendar"
+  year = "2010"
+  bw = False
+  feiertage = True
+  a = Calendar(year = year, language = language, cal_name = cal_name, basedir = basedir, bw = bw, feiertage = feiertage, print_location_in_index = print_location_in_index, belongs_to = belongs_to, holidays = holidays, calendar_caption = calendar_caption, output_dir = output_dir)
+  a.run()
   
 
 #### AMORGOS  
