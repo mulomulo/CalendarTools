@@ -155,7 +155,11 @@ class Calendar(object):
 #			self.make_sheet(month)
 #			self.mcount += 1
     self.months_txt_l = months
+    i = 0
     for sheet in self.l:
+      i += 1
+      if i > 13:
+        continue
       self.month = months[sheet[0]-1]
       print "Making %s" %self.month
       self.image_src = sheet[1]
@@ -695,14 +699,14 @@ if __name__ == "__main__":
   cal_name = u"Adventures of a-Small Farmer.Johannes.english.de"
 
   
-  cal_name = u"Μόνο λόγια.Karen.english.en"
-  print_location_in_index = ['location']
-  calendar_caption = "Hello Rabbit's Friend!"
-
-  #cal_name = u"Balloon.Kati.english.en"
-  #print_location_in_index = []
-  #calendar_caption = "Hello Rabbit's Friend!"
+  #cal_name = u"Μόνο λόγια.Karen.english.en"
   #print_location_in_index = ['location']
+  #calendar_caption = "Hello Rabbit's Friend!"
+
+  cal_name = u"Janetta.Janetta.english.en"
+  print_location_in_index = []
+  calendar_caption = "Hello Rabbit's Friend!"
+  print_location_in_index = ['location']
 
   if "." in cal_name:
     belongs_to = cal_name.split('.')[1]
