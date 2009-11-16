@@ -82,8 +82,7 @@ class Calendar(object):
     image = self.make_calendar()
 
   def get_images_in_folder(self):
-    src_folder = "%sSource//%s//%s" %(self.basedir, self.year, self.cal_name)
-    src_folder = "%s/src/%s/" %(self.basedir, self.cal_name.split(".")[0])
+    src_folder = "%s/src/%s/" %(self.basedir, self.cal_name)
     file_list = []
     g = glob.glob("%s//*.jpg" %(src_folder))
     for item in g:
@@ -161,7 +160,10 @@ class Calendar(object):
       if i > 13:
         continue
       self.month = months[sheet[0]-1]
-      print "Making %s" %self.month
+      try:
+        print "Making %s" %self.month
+      except:
+        print "Printing something with strange Characters"
       self.image_src = sheet[1]
       #self.mcount = int(month[0])
       #self.month = month
@@ -703,29 +705,123 @@ if __name__ == "__main__":
   #print_location_in_index = ['location']
   #calendar_caption = "Hello Rabbit's Friend!"
 
-  cal_name = u"Janetta.Janetta.english.en"
-  print_location_in_index = []
+  
+  cal_name = u"Balloon.Janetta-german.en"
   calendar_caption = "Hello Rabbit's Friend!"
   print_location_in_index = ['location']
 
-  if "." in cal_name:
-    belongs_to = cal_name.split('.')[1]
-    language = cal_name.split('.')[2]
-  try:
-    holidays = cal_name.split('.')[3]
-  except:
-    holidays = "en"
-  cal_name = cal_name.split('.')[0]  
+  FellEnd= {
+    'name':
+      'Fell End',
+    'belongs_to':
+      ['FellEnd.Bohmwick-english.de', 'FellEnd.Booth-english.en', 'FellEnd.DebbieJulian-english.en', 'FellEnd.DebbiePaul-english.en', 'FellEnd.HelgaColin-english.en',
+       'FellEnd.Janetta-english.en', 'FellEnd.Larissa-english.en', 'FellEnd.Steffi-english.en'],
+    'calendar_caption':
+      "These pictures were taken in Fell end in July 2009",
+    'print_location_index':
+      ['location']
+  }
   
-  basedir = 'C:/Users/Horst/Pictures/Output/Calendars/' 
-  output_dir = 'C:/Users/Horst/Pictures/Output/Calendars/' 
-  #print u"Making %s" %cal_name
-  print u"Making Calendar"
-  year = "2010"
-  bw = False
-  feiertage = True
-  a = Calendar(year = year, language = language, cal_name = cal_name, basedir = basedir, bw = bw, feiertage = feiertage, print_location_in_index = print_location_in_index, belongs_to = belongs_to, holidays = holidays, calendar_caption = calendar_caption, output_dir = output_dir)
-  a.run()
+  Sheep = {
+    'name':
+      'Sheep',
+    'belongs_to':
+      ['Johannes-german.de', 'Hazel-english.en', 'Oleg-english.en', 'SuziSimon-english.en'],
+    'calendar_caption':
+      "These sheep were photographed in various locations around the globe",
+    'print_location_index':
+      ['country', 'location']
+  }
+
+  NZ = {
+    'name':
+      'New Zealand',
+    'belongs_to':
+      ['Christine-german.de', 'Ratz-german.de', 'Dieter-german.de', 'Nadine-german.de', 'Sebastian-german.de', 'KateRich-english.sc', 'OlgaDima-english.en',
+       'Catherine-english.en', 'Victoria-english.en', 'David-english.en', 'KarenJames-english.en', 'MargaretRichard-enlgish.en', 'Marcus-enlgish.nz', 'Paul-english.en',
+       'Karen-english.en',],
+    'calendar_caption':
+      "These images were taken in December 2008 and January 2009 - many on the spectacular Banks Peninsula, close to Christchurch on the east coast of New Zealands's South Island.",
+    'print_location_index':
+      ['location']
+  }
+  
+  Istanbul = {
+    'name':
+      'Istanbul',
+    'belongs_to':
+      ['Zoltan-english.en', 'Olly-english.en', 'Mathias-english.en', 'Leigh-english.en', 'Luc-english.en', 'Richard-english.en', 'Judith-english.en',],
+    'calendar_caption':
+      "A selection of images taken when walking around in Istanbul during the European Crytallographic Meeting in August 2009",
+    'print_location_index':
+      ['location']
+  }
+
+  Amorgos = {
+    'name':
+      'Amorgos',
+    'belongs_to':
+      ['Carsten-greek.de', 'Volker-greek.de', 'Walter-greek.de', 'Dina-greek.gr', 'Periklies-greek.gr', 'Kallioope-greek.gr',
+       'Sabine-greek.gr', 'Thomas-greek.de', 'Manfred-greek.gr', 'CarolineOliver-greek.gr', 'Doris-greek.gr', 'Marco-greek.gr',
+       'FerdinandTraudel-greek.gr', 'MartinaJack-greek.gr', 'Heribert-german.de'],
+    'calendar_caption':
+      "All images were taken in Amorgos in September 2009",
+    'print_location_index':
+      ['location']
+  }
+  
+  CountryShows = {
+    'name':
+      'Country Shows',
+    'belongs_to':
+      ['Annette-german.de', 'Graeme-english.sc', 'Colin-english.en', 'Ehmke-english.en', 'LoraineJimmy-english.en', 'LindaDave-english.en', 'Jenny-english.en', 'Gerry-german.nz'],
+    'calendar_caption':
+      "These pictures were taken at two agricultural shows in the North East of England: The Slayley Show in August 2009 and The Blanchland Show in September 2009",
+    'print_location_index':
+      ['location']
+  }
+  
+  Ballon = {
+    'name':
+      'Balloon',
+    'belongs_to':
+      ['Balloon.Oma-german.de', 'Birgit-german.de', 'Doph-english.en', 'Chris-german.de', 'Emma-english.sc', 
+       'Father-english.sc', 'Granny-english.en', 'Holly-english.en', ],
+    'calendar_caption':
+      "",
+    'print_location_index':
+      ['location']
+  }
+
+  Callist = Ballon
+  name = Callist['name']
+  calendar_caption = Callist['calendar_caption']
+  print_location_index = Callist['print_location_index']
+  
+  for cal_name in Callist['belongs_to']:
+
+    if "-" in cal_name:
+      language = cal_name.split("-")[1].split(".")[0]
+      holidays = cal_name.split("-")[1].split(".")[1]
+      belongs_to = cal_name.split("-")[0]
+      if "." in belongs_to:
+        cal_name = cal_name.split("-")[0]
+        belongs_to = cal_name.split(".")[1]
+      else:
+        cal_name = name
+    
+    if "." in cal_name:
+      belongs_to = cal_name.split('.')[1]
+    
+    basedir = 'C:/Users/Horst/Pictures/Output/Calendars/' 
+    output_dir = 'C:/Users/Horst/Pictures/Output/Calendars/' 
+    print u"Making %s" %cal_name
+    print u"Making Calendar"
+    year = "2010"
+    bw = False
+    feiertage = True
+    a = Calendar(year = year, language = language, cal_name = cal_name, basedir = basedir, bw = bw, feiertage = feiertage, print_location_in_index = print_location_in_index, belongs_to = belongs_to, holidays = holidays, calendar_caption = calendar_caption, output_dir = output_dir)
+    a.run()
   
 
 #### AMORGOS  
