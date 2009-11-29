@@ -18,7 +18,7 @@ class Calendar(object):
     self.belongs_to = belongs_to
     self.holidays = holidays
     self.basedir = "%s/%s" %(basedir, self.year)
-    self.output_dir = "%s/%s" %(output_dir, self.year)
+    self.output_dir = "%s/%s/finished" %(output_dir, self.year)
     self.print_location_in_index = print_location_in_index
     try:
       self.cal_name = cal_name.split("_")[0]
@@ -224,13 +224,20 @@ class Calendar(object):
     x = int(i * tn_width + self.border_sides + i * gap_x)
     spacing = 30
     y = int((j * tn_height + self.border_top + j * gap_y) - 7)
-    font = ImageFont.truetype("%s" %self.fontname, 90)
+    if "-" in self.cal_name:
+      font_size = 70
+      self.cal_name = self.cal_name.replace("-", " ")
+    else:
+      font_size = 90
+      
+    font = ImageFont.truetype("%s" %self.fontname, font_size)
 ##beware dragons 
-    try:
-      text = self.cal_name.split(".")[0].split("-")[1]
-    except:
-      text = self.cal_name
-      text = self.cal_name.split('.')[0]
+#    try:
+#      text = self.cal_name.split(".")[0].split("-")[1]
+#    except:
+
+    text = self.cal_name
+    text = self.cal_name.split('.')[0]
   
     draw.text((x-4, y), "%s" %text, font=font, fill=self.month_col)
 
@@ -355,14 +362,15 @@ class Calendar(object):
     if len(t) > 1:
       i = 0
       for text in t:
+        text_size = 120
         if i == 0:
-          font = ImageFont.truetype("%s" %self.fontname, 80)
+          font = ImageFont.truetype("%s" %self.fontname, text_size)
           txt_size = draw.textsize(text, font=font)
         else:
-          font = ImageFont.truetype("%s" %self.fontname, 130)
+          font = ImageFont.truetype("%s" %self.fontname, text_size)
           txt_size = draw.textsize(text, font=font)
         x = int(int((self.width/2) - (txt_size[0]/2)))
-        y  = int(self.height * self.title_begin + i * 90)
+        y  = int(self.height * self.title_begin + i * text_size)
         draw.text((x, y), "%s" %text, font=font, fill=month_col)
         i += 1
     else:
@@ -737,13 +745,14 @@ if __name__ == "__main__":
     'name':
       'New Zealand',
     'belongs_to':
-      ['Christine-german.de', 'Ratz-german.de', 'Dieter-german.de', 'Nadine-german.de', 'Sebastian-german.de', 'KateRich-english.sc', 'OlgaDima-english.en',
-       'Catherine-english.en', 'Victoria-english.en', 'David-english.en', 'KarenJames-english.en', 'MargaretRichard-enlgish.en', 'Marcus-enlgish.nz', 'Paul-english.en',
+      ['Christine-german.de', 'Ratz-german.de', 'Dieter-german.de', 'Nadine-english.de', 'Sebastian-german.de', 'KateRich-english.sc', 'OlgaDima-english.en',
+       'Catherine-english.en', 'Victoria-english.en', 'David-english.en', 'KarenJames-english.en', 'MargaretRichard-english.en', 'Marcus-english.nz', 'Paul-english.en',
        'Karen-english.en',],
     'calendar_caption':
-      "These images were taken in December 2008 and January 2009 - many on the spectacular Banks Peninsula, close to Christchurch on the east coast of New Zealands's South Island.",
+      "These images were taken in December 2008 and January 2009. We started out on Banks Peninsula, on the east coast of the South Islands, drove across Arthur's Pass\
+ to the West Coast, then up to Farewell Spit. We ended up in Wellington and the Wairarapa, in the south of the North Island.",
     'print_location_index':
-      ['location']
+      ['headline', 'location', 'city', 'province']
   }
   
   Istanbul = {
@@ -770,33 +779,34 @@ if __name__ == "__main__":
       ['location']
   }
   
-  CountryShows = {
+  AgriculturalShows = {
     'name':
-      'Country Shows',
+      'Agricultural-Shows',
     'belongs_to':
-      ['Annette-german.de', 'Graeme-english.sc', 'Colin-english.en', 'Ehmke-english.en', 'LoraineJimmy-english.en', 'LindaDave-english.en', 'Jenny-english.en', 'Gerry-german.nz'],
+      ['Annette-english.de', 'Graeme-english.sc', 'Colin-english.en', 'Ehmke-english.en', 'LoraineJimmy-english.en', 'LindaDave-english.en', 'Jenny-english.en', 'Gerry-english.nz'],
     'calendar_caption':
       "These pictures were taken at two agricultural shows in the North East of England: The Slayley Show in August 2009 and The Blanchland Show in September 2009",
     'print_location_index':
       ['location']
   }
   
-  Ballon = {
+  Balloon = {
     'name':
       'Balloon',
     'belongs_to':
-      ['Balloon.Oma-german.de', 'Birgit-german.de', 'Doph-english.en', 'Chris-german.de', 'Emma-english.sc', 
-       'Father-english.sc', 'Granny-english.en', 'Holly-english.en', ],
+      ['Oma-german.de', 'Birgit-german.de', 'Doph-english.en', 'Chris-english.de', 'Emma-english.sc', 
+       'Father-english.sc', 'Granny-english.en', 'Holly-english.en', 'Cloud Nine-english.en'],
     'calendar_caption':
-      "",
+      "These images were taken during a 35 minute balloon ride, taking off in Allensford and landing near Burnopfield - in the North East of England. More pictuers and trace \
+of the flight can be found at http://maps.google.com/maps/ms?ie=UTF&msa=0&msid=102123436356381590541. 00046cbb791494649e28f. (Sorry about the typing!)",
     'print_location_index':
       ['location']
   }
 
-  Callist = Ballon
+  Callist = Istanbul
   name = Callist['name']
   calendar_caption = Callist['calendar_caption']
-  print_location_index = Callist['print_location_index']
+  print_location_in_index = Callist['print_location_index']
   
   for cal_name in Callist['belongs_to']:
 
