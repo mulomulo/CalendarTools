@@ -45,16 +45,16 @@ Te_Marua=\
     {'name':'Te Marua',
     'map':'Te Marua',
     'header':'Te Marua',
-    'caption':'Just north of Wellington lies the Te Marua area. Part of the Tararua Forest Park, much of Wellington\'s watersupply originates in this native rainforest area.',
+    'caption':'Just north of Wellington lies the Te Marua area. Part of the Tararua Forest Park, much of Wellington\'s water supply originates in this native rainforest area.',
     'src':"Te Marua"}
 
 Auckland=\
     {'name':'Auckland',
-    'caption':'Auckland is New Zealand\s biggest city - with just over 1M people it is by no means a big city though.'}
+    'caption':'Auckland is New Zealand\s biggest city - with 1.3M people it is by no means a huge city in terms of poplulation - it is, however very large in area.'}
 
 Golden_Bay=\
     {'name':'Golden Bay',
-    'caption':'The Golden Bay area is separated by the rest of the South Island by the Takaka Hills.'}
+    'caption':'The Golden Bay area is separated by the rest of the South Island by the Takaka Hills. With its own microclimate, a unique piece of land results.'}
 
 Marlborough_Sounds=\
     {'name':'Marlborough Sounds',
@@ -233,14 +233,14 @@ Tiniroto=\
 
 Pongaroa=\
     {'name':'Pongaroa',
-     'caption':'In the northern Wairarapa.'}
+     'caption':'In the northern Wairarapa, this village has a population of around 30, but supports the surrounding farms, which brings the total population to around 300.'}
 
 The_Beehive=\
     {'name':'The Beehive',
      'caption':'Wellington'}
 
 Wellington_Railway_Station=\
-    {'name':'Wellington Railway Station',
+    {'name':'There used to be a well-functioning railway system in New Zealand. Overland trains are now mainly a tourist attraction, with two Intercity between Wellington and Auckland a day.',
      'caption':'Wellington.'}
 
 Lake_Ferry=\
