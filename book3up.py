@@ -136,7 +136,7 @@ Coromandel=\
     'header':'Coromandel Town',
     'caption':'The main town of the beautiful Coromandel Penisnula is really no more than a small sleepy village.'}
 
-pages = [(Ninety_Mile_Beach,Northland),
+pages = [(Lyal_Bay,),
          (Flea_Bay,Little_Blue_Penguin),
          (Ninety_Mile_Beach,Northland)]
 
