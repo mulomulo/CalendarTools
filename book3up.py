@@ -10,7 +10,7 @@ import sys
 
 
 # Image size full: 4685 x 1145
-# Image size half: 2119 x 1139
+# Image size half: 2122 x 1145
 
 def draw_text(draw, text, font, x, y, fill='#ababab', max_width = 200, line_spacing = 50, align='left'):
     text = text.split()
@@ -72,7 +72,7 @@ Featherston=\
     {'name':'Featherston',
     'caption':'A half hour drive away from Wellington over the Rimutaka Hills, the first town of the Wairarapa is Featherston.'}
    
-Lyal_Bay=\
+Lyall_Bay=\
     {'name':'Lyall Bay',
     'caption':'On Wellington\'s south coast, preparations for a music video by ... were well under way.'}
 
@@ -133,12 +133,161 @@ Hamilton=\
 
 Coromandel=\
     {'name':'Coromandel',
-    'header':'Coromandel Town',
+     'headline':'Coromandel Town',
     'caption':'The main town of the beautiful Coromandel Penisnula is really no more than a small sleepy village.'}
 
-pages = [(Lyal_Bay,),
-         (Flea_Bay,Little_Blue_Penguin),
-         (Ninety_Mile_Beach,Northland)]
+Castlepoint=\
+    {'name':'Castlepoint',
+    'caption':'Castlepoint is hidden well away on the Wairarapa coast. It has one of New Zealand\'s oldest lighthouses.'}
+
+Milford_Sound=\
+    {'name':'Milford Sound',
+    'caption':'In the middle of the vast Southland National Park is Milford Sound, one of the few accessible places on the wild southern West Coast of the South Island'}
+
+Mitre_Peak=\
+    {'name':'Mitre Peak',
+     'map':'Milford Sound',
+    'caption':'Possibly one of New Zealand\'s best known landmarks: Mitre Peak rising out of Milford Sound.'}
+
+Variable_Oystercatcher=\
+    {'name':'Variable Oystercatcher',
+     'map':'Banks Peninsula',
+    'caption':'These birds are common along the coastlines of the South Island. This showed his displeasure about being photographed in Le Bons Bay, Banks Peninsula'}
+
+Tui=\
+    {'name':'Tui',
+     'map':'Kapiti Island',
+    'caption':'One of the few surviving indigeneous bird species: The Tui. Although not common, numbers are increasing. This one was photographed on Kapiti Island.'}
+
+Homewood=\
+    {'name':'Homewood',
+     'caption':'South of Riversdale in the Wairarapa, the tar seal will stop and the road continues as a metal road. Along this road, the world seems to end.'}
+
+Tongariro_National_Park=\
+    {'name':'Tongariro National Park',
+     'caption':'The Tongariro Crossing, one of the \'Great Walks\', leads through some wonderous volcanically active landscapes.'}
+
+Lake_Hawea=\
+    {'name':'Lake Hawea',
+     'caption':'The road connecting Wanaka via the Haast Pass to the West coast winds along Lake Hawea for a while.'}
+
+Arthurs_Pass=\
+    {'name':'Arthur\'s Pass',
+     'map':'Arthur\'s Pass',
+     'caption':'The Southern Alps can be crossed only in a few places. One of the more spectacular ones is Arthur\'s Pass.'}
+
+Waimakariri_River=\
+    {'name':'Waimakariri River',
+     'map':'Arthur\'s Pass',
+     'caption':'The vast flood plain of the Waimakariri River on the east side of Arthur\'s Pass'}
+
+Arthurs_Pass_Forest=\
+    {'name':'Arthur\'s Pass Forest',
+     'map':'Arthur\'s Pass',
+     'caption':'Arthur\' Pass National Park has many different types of native bush, depending on the height of the terrain.'}
+
+Rotorua=\
+    {'name':'Rotorua',
+     'caption':'This boiling waterfall is in a thermal field very near to Rotorua: Hell\'s Gate'}
+
+Lost_Soles=\
+    {'name':'Lost Soles',
+     'map':'Castlepoint',
+     'caption':'Castlepoint is a strange spot in more than on way!'}
+
+Aylesbury=\
+    {'name':'Aylesbury',
+     'caption':'The TansAlpine railway runs once a day in each direction between Christchurch and Greymouth across Arthur\' Pass'}
+
+Martinborough=\
+    {'name':'Martinborough',
+     'caption':'This small town in the Wairarapa has become famous for its ecellent Pinot Noir and Riesling wines.'}
+
+Napier=\
+    {'name':'Napier',
+     'caption':'Napier was once one of the leading wool exporting ports of the country. This is one of the woolsheds on the quayside.'}
+
+The_Catlins=\
+    {'name':'The Catlins',
+     'caption':'Situated on the south-east coast of the South Island, this virtually unknown area is fantastic for all kinds of wildlife.'}
+
+Punakaiki=\
+    {'name':'Punakaiki',
+     'caption':'Also known as \'Pancake Rocks\', these rock formations are a major tourist attraction on the West Coast.'}
+
+Kapiti_Island=\
+    {'name':'Kapiti Island',
+     'caption':'Kapiti Island has been rodent-free for the last 15 years. It is a conservation area, where human access is strictly controlled.'}
+
+Fern_Frond=\
+    {'name':'Fern Frond',
+     'caption':'Ferns grow everywhere in New Zealand. There are very many different species, many of which are indigenous to the country.'}
+
+Motupiko=\
+    {'name':'Motupiko',
+     'caption':'A wee church'}
+
+Tiniroto=\
+    {'name':'Tiniroto',
+     'caption':'On the inland road leading from Wairoa to Gisborne'}
+
+Pongaroa=\
+    {'name':'Pongaroa',
+     'caption':'In the northern Wairarapa.'}
+
+The_Beehive=\
+    {'name':'The Beehive',
+     'caption':'Wellington'}
+
+Wellington_Railway_Station=\
+    {'name':'Wellington Railway Station',
+     'caption':'Wellington.'}
+
+Lake_Ferry=\
+    {'name':'Lake Ferry',
+     'caption':'wairarapa'}
+
+Taupo=\
+    {'name':'Taupo',
+     'caption':'trees'}
+
+Lake_Taupo=\
+    {'name':'Lake Taupo',
+     'caption':'Lake'}
+
+Mitre_Peak_2=\
+    {'name':'Mitre Peak 2',
+     'caption':'Peak'}
+
+Civic_Square=\
+    {'name':'Civic Square',
+     'caption':'Balls'}
+
+pages = [(Hamilton,Coromandel),#ok
+         (Ahikiwi,Wairarapa),#ok
+         (Castlepoint,Ninety_Mile_Beach),#ok
+         (Milford_Sound,Mitre_Peak),#ok
+         (Variable_Oystercatcher,Tui),#ok
+         (Homewood, Lyall_Bay),#ok
+         (Tongariro_National_Park,Lake_Hawea),#ok
+         (Flea_Bay, Little_Blue_Penguin),#ok
+         (Fern_Frond,Arthurs_Pass_Forest),#ok
+         (Lost_Soles, Aylesbury),#ok
+         (Martinborough, The_Catlins),#ok
+         (Kapiti_Island, Taupo),
+         (Waimakariri_River, Punakaiki),
+         (Lake_Taupo, Civic_Square),
+         (Cathedral_Cove, Mitre_Peak_2),
+         (Motupiko, Rotorua),#ok
+         (Tiniroto, Pongaroa),
+         (The_Beehive, Wellington_Railway_Station),#ok
+         
+         (Arthurs_Pass,),#ok
+         (Te_Marua,),#ok
+         (Lake_Ferry,),#ok
+         (Auckland,),#ok
+
+         ]
 
 image_src = r"C:\Users\Horst\Pictures\Output\Books\NZ\src"
 output_folder = r"C:\Users\Horst\Pictures\Output\Books\NZ"
@@ -149,14 +298,15 @@ height = 3416
 margin = 48
 marg_x = 40
 
-marg_y = 40
+marg_y = 30
 
 left_image_x = 450
 max_text_width = left_image_x - margin - marg_x - 30
 #print "Max txt width: %i" %max_text_width
 
-marg_x_map = (left_image_x + margin - 282)/2
+marg_x_map = (left_image_x  - 282)
 
+marg_x_map = (marg_x)
 
 bg_col = '#ffffff'
 
@@ -173,7 +323,6 @@ font_small = ImageFont.truetype("%s" %fontname_small, font_size_small)
 
 
 
-#draw.rectangle((margin,margin,width-margin,height-margin), fill='#ffdddd')
 #draw.rectangle((margin,margin,left_image_x,height-margin), fill='#ff0000')
 
 image_height = int((height-2*margin)/3)
@@ -187,7 +336,7 @@ for page in pages:
         if not continue_on_page:
             IM = Image.new('RGBA', (width, height), bg_col)
             draw = ImageDraw.Draw(IM)
-        
+            draw.rectangle((margin,margin,width-margin,height-margin), fill='#ffdddd')
         name = imd['name']
         picture = imd.get('src', name)
         picture = Image.open("%s/%s.jpg" %(image_src, picture))
@@ -196,7 +345,7 @@ for page in pages:
         try:
             map = Image.open("%s/%s.png" %(image_src, map))
         except:
-            print("No Map!")
+            print("No Map: %s!" %map)
         caption = imd['caption']
         left = imd.get('left', False)
         
