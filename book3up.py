@@ -45,40 +45,46 @@ Te_Marua=\
     {'name':'Te Marua',
     'map':'Te Marua',
     'header':'Te Marua',
-    'caption':'Just north of Wellington lies the Te Marua area. Part of the Tararua Forest Park, much of Wellington\'s water supply originates in this native rainforest area.',
+    'caption':'Just north of Wellington lies the Te Marua area, part of the Tararua Forest Park. Much of Wellington\'s water supply originates in this native rainforest area.',
     'src':"Te Marua"}
 
 Auckland=\
     {'name':'Auckland',
-    'caption':'Auckland is New Zealand\s biggest city - with 1.3M people it is by no means a huge city in terms of poplulation - it is, however very large in area.'}
+    'caption':'Auckland is New Zealand\'s biggest city with 1.3M people. It is by no means a huge city in terms of population. It is, however very large in area.'}
 
 Golden_Bay=\
     {'name':'Golden Bay',
-    'caption':'The Golden Bay area is separated by the rest of the South Island by the Takaka Hills. With its own microclimate, a unique piece of land results.'}
+    'caption':'The Golden Bay area is separated from the rest of the South Island by the Takaka Hills.'}
 
 Marlborough_Sounds=\
     {'name':'Marlborough Sounds',
-     'caption':'At the top of the South Island - most of it accessible only by boat. This is a truly magical area of New Zealand.'}
+     'caption':'At the top of the South Island - most of it is accessible only by boat. This is a truly magical area of New Zealand.'}
     
 Picton=\
     {'name':'Picton',
-    'caption':'Sometimes known as the \'Gateway to the Sout Island\' this town links the North Island with the South Island because of it\' Interislander Ferry Terminal'}
+    'caption':'Sometimes known as the \'Gateway to the South Island\'. This town links the North Island with the South Island with the Interislander Ferry Terminal'}
     
 Lake_Ferry=\
     {'name':'Lake Ferry',
-    'caption':'Situated at the southern tip of the North Island, in the Wairarapa region, this area feels well and truly like the end of the world.'}
+    'caption':'Situated at the southern tip of the North Island, in the Wairarapa region. This area feels well and truly like the end of the world.'}
 
 Featherston=\
     {'name':'Featherston',
-    'caption':'A half hour drive away from Wellington over the Rimutaka Hills, the first town of the Wairarapa is Featherston.'}
+    'caption':'A half hour drive away from Wellington over the Rimutaka Hills. The first town of the Wairarapa is Featherston.'}
    
 Lyall_Bay=\
     {'name':'Lyall Bay',
-    'caption':'On Wellington\'s south coast, preparations for a music video by ... were well under way.'}
+    'caption':'Preparations for a music video by \'The Phoenix Foundation\' were well under way.'}
+
+Lyall_Bay_Long=\
+    {'name':'Lyall Bay Long',
+    'header':'Lyall Bay',
+    'map':'Wellington',
+    'caption':'Preparations for a music video by \'The Phoenix Foundation\' were well under way.'}
 
 Northland=\
     {'name':'Northland',
-    'caption':'At the very far North of New Zealand, the region of Northland is known for it\'s almost subtropical climate. Banana plants have no trouble growing here'}
+    'caption':'At the very far north of New Zealand, the region of Northland is known for it\'s almost subtropical climate. Banana plants have no trouble growing here'}
 
 Ninety_Mile_Beach=\
     {'name':'90 Mile Beach',
@@ -86,7 +92,7 @@ Ninety_Mile_Beach=\
 
 Cathedral_Cove=\
     {'name':'Cathedral Cove',
-    'caption':'The beaches of the Coromandel Peninsula are famous. Perhaps none is as famous as this much-visited stretch of coast by Cathredral Coast, which has finally been granted marine sanctuary status.'}
+    'caption':'The beaches of the Coromandel Peninsula are famous. This much-visited stretch of coast by Cathedral Cove, has finally been granted marine sanctuary status.'}
 
 Taranaki_Coast=\
     {'name':'Taranaki Coast',
@@ -94,7 +100,7 @@ Taranaki_Coast=\
 
 East_Cape=\
     {'name':'East Cape',
-    'caption':'One of the North Island\'s least touched regions, the East Cape is a magnificent and very special piece of land.'}
+    'caption':'One of the North Island\'s least touched regions, the East Cape is a magnificent and very special area.'}
 
 Waiapu=\
     {'name':'Waiapu',
@@ -102,16 +108,16 @@ Waiapu=\
 
 Ahikiwi=\
     {'name':'Ahikiwi',
-    'caption':'Along SH 12 near Ahikiwi. This far north, the green is intense. This is in stark contrast with the blue of the sea and the sky and with the white of the clounds'}
+    'caption':'Along SH 12 near Ahikiwi. This far north, the green is intense. This is in stark contrast with the blue of the sea and the sky and with the white of the clouds'}
 
 Wairarapa=\
     {'name':'Wairarapa',
-    'caption':'At the other end of the North Island, the Wairarapa dries out more or less completely towards the end of the summer.'}
+    'caption':'At the other end of the North Island, the Wairarapa becomes very dry at the end of the summer.'}
 
     
 Little_River=\
     {'name':'Little River',
-    'caption':'The first place on Banks Peninsula you encounter is Little River. Once, this place had a railway station and must have been bustling with life.'}
+    'caption':'The first place encountered on Banks Peninsula is Little River. Once, this place had a railway station and must have been bustling with life.'}
 
 Close=\
     {'name':'Closed',
@@ -120,12 +126,12 @@ Close=\
 
 Flea_Bay=\
     {'name':'Flea Bay',
-    'caption':'On the southen coast of Banks Peninsula, this little bay has been declared a marine reserve. It is also inaccessible by land.'}
+    'caption':'On the southern coast of Banks Peninsula, this little bay has been declared a marine reserve. It is inaccessible by road.'}
 
-Little_Blue_Penguin=\
-    {'name':'Little Blue Penguin',
+Korora=\
+    {'name':'Korora',
     'map':'Flea Bay',
-    'caption':'Flea Bay is home to around 1000 Little Blue Penguins. A few years ago, there were around 20. Due to the efforts of one farmer, the population could be re-esablished.'}
+    'caption':'Flea Bay is home to around 1000 Little Blue Penguins. A few years ago, there were only 20. Thanks to the efforts of the landowners, the population has been re-established.'}
 
 Hamilton=\
     {'name':'Hamilton',
@@ -134,47 +140,54 @@ Hamilton=\
 Coromandel=\
     {'name':'Coromandel',
      'headline':'Coromandel Town',
-    'caption':'The main town of the beautiful Coromandel Penisnula is really no more than a small sleepy village.'}
+    'caption':'The main town of the beautiful Coromandel Peninsula is really no more than a small sleepy village.'}
 
 Castlepoint=\
     {'name':'Castlepoint',
-    'caption':'Castlepoint is hidden well away on the Wairarapa coast. It has one of New Zealand\'s oldest lighthouses.'}
+    'caption':'Castlepoint is hidden away on the Wairarapa coast. It has one of New Zealand\'s oldest lighthouses.'}
 
 Milford_Sound=\
     {'name':'Milford Sound',
-    'caption':'In the middle of the vast Southland National Park is Milford Sound, one of the few accessible places on the wild southern West Coast of the South Island'}
+    'caption':'In the middle of the vast Fiordland National Park is Milford Sound, one of the few accessible places on the wild southern West Coast of the South Island'}
 
 Mitre_Peak=\
     {'name':'Mitre Peak',
      'map':'Milford Sound',
-    'caption':'Possibly one of New Zealand\'s best known landmarks: Mitre Peak rising out of Milford Sound.'}
+    'caption':'One of New Zealand\'s best known landmarks: Mitre Peak rising out of Milford Sound.'}
 
 Variable_Oystercatcher=\
     {'name':'Variable Oystercatcher',
      'map':'Banks Peninsula',
-    'caption':'These birds are common along the coastlines of the South Island. This showed his displeasure about being photographed in Le Bons Bay, Banks Peninsula'}
+    'caption':'These birds are common along the coastlines of the South Island. This one showed his displeasure about being photographed in Le Bons Bay, Banks Peninsula'}
 
 Tui=\
     {'name':'Tui',
      'map':'Kapiti Island',
-    'caption':'One of the few surviving indigeneous bird species: The Tui. Although not common, numbers are increasing. This one was photographed on Kapiti Island.'}
+    'caption':'One of the few surviving endemic bird species: The Tui. Although not common, numbers are increasing. This one was photographed on Kapiti Island.'}
 
 Homewood=\
     {'name':'Homewood',
-     'caption':'South of Riversdale in the Wairarapa, the tar seal will stop and the road continues as a metal road. Along this road, the world seems to end.'}
+     'caption':'South of Riversdale in the Wairarapa, the tar seal stops and the road continues as a metal road. Along this road, the world seems to end.'}
+
+Homewood_Long=\
+    {'name':'Homewood Long',
+     'header':'Homewood',
+     'map':'Homewood',
+     'caption':'South of Riversdale in the Wairarapa, the tar seal stops and the road continues as a metal road. Along this road, the world seems to end.'}
+
 
 Tongariro_National_Park=\
     {'name':'Tongariro National Park',
-     'caption':'The Tongariro Crossing, one of the \'Great Walks\', leads through some wonderous volcanically active landscapes.'}
+     'caption':'The Tongariro Alpine Crossing is one of New Zealand\'s most spectacular one-day tracks, it leads through some wondrous volcanically active landscapes.'}
 
 Lake_Hawea=\
     {'name':'Lake Hawea',
-     'caption':'The road connecting Wanaka via the Haast Pass to the West coast winds along Lake Hawea for a while.'}
+     'caption':'The road connecting Wanaka via the Haast Pass to the West Coast winds along Lake Hawea for a while.'}
 
 Arthurs_Pass=\
     {'name':'Arthur\'s Pass',
      'map':'Arthur\'s Pass',
-     'caption':'The Southern Alps can be crossed only in a few places. One of the more spectacular ones is Arthur\'s Pass.'}
+     'caption':'The Southern Alps can be crossed only in a few places. One of the more spectacular is Arthur\'s Pass.'}
 
 Waimakariri_River=\
     {'name':'Waimakariri River',
@@ -184,7 +197,7 @@ Waimakariri_River=\
 Arthurs_Pass_Forest=\
     {'name':'Arthur\'s Pass Forest',
      'map':'Arthur\'s Pass',
-     'caption':'Arthur\' Pass National Park has many different types of native bush, depending on the height of the terrain.'}
+     'caption':'Arthur\'s Pass National Park has many different types of native bush, depending on the height of the terrain.'}
 
 Rotorua=\
     {'name':'Rotorua',
@@ -193,19 +206,20 @@ Rotorua=\
 Lost_Soles=\
     {'name':'Lost Soles',
      'map':'Castlepoint',
-     'caption':'Castlepoint is a strange spot in more than on way!'}
+     'caption':'Castlepoint is a strange spot in more than one way!'}
 
 Aylesbury=\
     {'name':'Aylesbury',
-     'caption':'The TansAlpine railway runs once a day in each direction between Christchurch and Greymouth across Arthur\' Pass'}
+     'caption':'The TranzAlpine train runs once a day in each direction between Christchurch and Greymouth through the magnificent Southern Alps'}
 
 Martinborough=\
     {'name':'Martinborough',
-     'caption':'This small town in the Wairarapa has become famous for its ecellent Pinot Noir and Riesling wines.'}
+     'header':'West Wairarapa',
+     'caption':'Small chapel near Martinborough, a small town that has become famous for its excellent Pinot Noir and Riesling wines.'}
 
 Napier=\
     {'name':'Napier',
-     'caption':'Napier was once one of the leading wool exporting ports of the country. This is one of the woolsheds on the quayside.'}
+     'caption':'Napier was once one of the leading wool exporting ports of the country. This is one of the wool sheds on the quayside.'}
 
 The_Catlins=\
     {'name':'The Catlins',
@@ -221,11 +235,12 @@ Kapiti_Island=\
 
 Fern_Frond=\
     {'name':'Fern Frond',
+     'map':'nz',
      'caption':'Ferns grow everywhere in New Zealand. There are very many different species, many of which are indigenous to the country.'}
 
 Motupiko=\
     {'name':'Motupiko',
-     'caption':'A wee church'}
+     'caption':'St George\'s Church'}
 
 Tiniroto=\
     {'name':'Tiniroto',
@@ -237,55 +252,103 @@ Pongaroa=\
 
 The_Beehive=\
     {'name':'The Beehive',
-     'caption':'Wellington'}
+     'map':'Wellington',
+     'caption':'The Beehive is the common name for the executive wing of the New Zealand Parliament Buildings'}
 
 Wellington_Railway_Station=\
-    {'name':'There used to be a well-functioning railway system in New Zealand. Overland trains are now mainly a tourist attraction, with two Intercity between Wellington and Auckland a day.',
-     'caption':'Wellington.'}
+    {'name':'Wellington Railway Station',
+     'map':'Wellington',
+     'caption':'There used to be a well-functioning railway system in New Zealand. Overland trains are now mainly a tourist attraction, with two Intercity trains between Wellington and Auckland each day.'}
 
 Lake_Ferry=\
     {'name':'Lake Ferry',
-     'caption':'wairarapa'}
+     'caption':'Lake Ferry is a small settlement between the shores of Lake Onoke and Palliser Bay'}
 
 Taupo=\
     {'name':'Taupo',
-     'caption':'trees'}
+     'caption':'Taupo is a centre of volcanic and geothermal activity.'}
 
 Lake_Taupo=\
     {'name':'Lake Taupo',
-     'caption':'Lake'}
+     'caption':'Lake Taupo is New Zealand\'s largest lake.'}
 
 Mitre_Peak_2=\
-    {'name':'Mitre Peak 2',
-     'caption':'Peak'}
+    {'name':'Mitre Peak',
+     'map':'Milford Sound',
+     'caption':'Mitre Peak is a majestic peak. It resembles a bishop\'s headdress when viewed from the right direction'}
 
 Civic_Square=\
     {'name':'Civic Square',
-     'caption':'Balls'}
+     'map':'Wellington',
+     'caption':'An iconic 3.4 metre diameter sphere of sculpted leaves of several ferns endemic to New Zealand is suspended 14 metres above the centre of the Civic Square'}
+
+Toi_Toi=\
+    {'name':'Toi Toi',
+     'map':'Castlepoint',
+     'caption':'There are four species of grass native to New Zealand known as Toi Toi. The plant can grow up to 4 metres tall.'}
+
+Waterfall=\
+    {'name':'Waterfall',
+     'map':'Banks Peninsula',
+     'caption':'Many waterfalls be seen on the Banks Peninsula Track.'}
+
+Boat_Houses=\
+    {'name':'Wellington Boat Sheds',
+     'map':'Wellington',
+     'caption':'Boat Sheds in Oriental Bay'}
+
+Shed=\
+    {'name':'Shed',
+     'map':'Homewood',
+     'caption':'In New Zealand sheds can be found nearly everywhere.'}
+
+Wellington_From_Matui_2=\
+    {'name':'Wellington from Matui 2',
+     'header':'Wellington from Matui/Somes',
+     'map':'Wellington',
+     'caption':'Matui/Somes was formerly a quarantine island. It is now a conservation area, where many native species are re-establishing themselves.'}
+
+Wellington_Airport=\
+    {'name':'Wellington Airport',
+     'map':'Wellington',
+     'caption':'Good Bye'}
+
+Mount_Victoria=\
+    {'name':'Mount Victoria',
+     'header':'Mount Victoria',
+     'map':'Wellington',
+     'caption':'Rising above the Overseas Terminal - now a marina - is Mt. Victoria. It is one of Wellington\' most thought after location.'}
+
 
 pages = [(Hamilton,Coromandel),#ok
-         (Ahikiwi,Wairarapa),#ok
-         (Castlepoint,Ninety_Mile_Beach),#ok
-         (Milford_Sound,Mitre_Peak),#ok
-         (Variable_Oystercatcher,Tui),#ok
-         (Homewood, Lyall_Bay),#ok
-         (Tongariro_National_Park,Lake_Hawea),#ok
-         (Flea_Bay, Little_Blue_Penguin),#ok
+         #(Ahikiwi,Wairarapa),#ok
+         #(Castlepoint,Ninety_Mile_Beach),#ok
+         #(Milford_Sound,Mitre_Peak),#ok
+         #(Variable_Oystercatcher,Tui),#ok
+         #(Homewood, Lyall_Bay),#ok
+         #(Tongariro_National_Park,Lake_Hawea),#ok
+         #(Flea_Bay, Korora),#ok
          (Fern_Frond,Arthurs_Pass_Forest),#ok
-         (Lost_Soles, Aylesbury),#ok
-         (Martinborough, The_Catlins),#ok
-         (Kapiti_Island, Taupo),
-         (Waimakariri_River, Punakaiki),
-         (Lake_Taupo, Civic_Square),
-         (Cathedral_Cove, Mitre_Peak_2),
-         (Motupiko, Rotorua),#ok
-         (Tiniroto, Pongaroa),
-         (The_Beehive, Wellington_Railway_Station),#ok
+         #(Lost_Soles, Aylesbury),#ok
+         #(Martinborough, The_Catlins),#ok
+         #(Kapiti_Island, Taupo),
+         #(Waimakariri_River, Punakaiki),
+         #(Lake_Taupo, Civic_Square),
+         #(Cathedral_Cove, Mitre_Peak_2),
+         #(Motupiko, Rotorua),#ok
+         #(Tiniroto, Pongaroa),
+         #(The_Beehive, Wellington_Railway_Station),#ok
+         #(Waterfall, Toi_Toi),#ok
+         #(Shed, Boat_Houses, ),#ok
+         #(Wellington_From_Matui_2, Marlborough_Sounds, ),#ok
          
-         (Arthurs_Pass,),#ok
-         (Te_Marua,),#ok
-         (Lake_Ferry,),#ok
-         (Auckland,),#ok
+         #(Arthurs_Pass,),#ok
+         #(Lyall_Bay_Long,),
+         #(Homewood_Long,),
+         #(Te_Marua,),#ok
+         #(Lake_Ferry,),#ok
+         #(Auckland,),#ok
+         #(Mount_Victoria,),#ok
 
          ]
 
@@ -336,7 +399,7 @@ for page in pages:
         if not continue_on_page:
             IM = Image.new('RGBA', (width, height), bg_col)
             draw = ImageDraw.Draw(IM)
-            draw.rectangle((margin,margin,width-margin,height-margin), fill='#ffdddd')
+            #draw.rectangle((margin,margin,width-margin,height-margin), fill='#ffdddd')
         name = imd['name']
         picture = imd.get('src', name)
         picture = Image.open("%s/%s.jpg" %(image_src, picture))
