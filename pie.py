@@ -33,8 +33,12 @@ def get_transpose(o_l):
     line_l = line.split("\t")
     j = 0
     for item in line_l:
-      t_l.append("")
+      if j == 0 and i == 0:
+        for k in range(len(line_l)):
+          t_l.append("")
+      item = item.strip()
       t_l[j] += "%s\t" %item
+      print "%s\t" %item
       j +=1
     i += 1
   return t_l
@@ -52,6 +56,7 @@ def get_survey_file_l(filename):
 
 def get_choice_answers(txt_l):
   for line in txt_l:
+    no_answer = 0
     bits = {}
 #    print "\n-------------------------"
     line_l = line.split("\t")
@@ -71,10 +76,12 @@ def get_choice_answers(txt_l):
       bit = bit.strip()
       bit = bit.replace('"','')
       if not bit:
-        continue
+        no_answer += 1
+        print no_answer,
       if bit.startswith("Q"):
+        no_answer -= 1
         continue
-      if "," in bit and len(bit) < 20:
+      if "," in bit and len(bit) < 40:
         bi = bit.split(",")
         for b in bi:
           b = b.strip()
@@ -101,8 +108,8 @@ def get_choice_answers(txt_l):
       l = []
       ok = False
       defin = ['not at all', 'a bit', 'a lot', 'very much',
-               'not satisfied', 'indifferent', 'satisfied', 'very satisfied', 'n/a',
-               'no problems', 'daytime', 'evenings', 'weekends',
+               'very satisfied', 'satisfied', 'indifferent', 'not satisfied',  'n/a',
+               'daytime', 'evenings', 'weekends', 'no problems',
                'not an issue', 'slighly upset', 'not bothered', 'slightly upset', 'very upset',
                '19-25', '26-35', '36-45', '46-55', '56-65', '66-75', '76-85', 'over 85',
                'up to 1 year', '1-3 years', '4-10 years', '11-20 years', 'more than 20 years', 'all my life',
@@ -118,7 +125,10 @@ def get_choice_answers(txt_l):
           print err
       if ok:
 
-        l.append(("no answer", total_n-accounted_for))
+        #l.append(("no answer", total_n-accounted_for))
+        l.append(("no answer", no_answer))
+        print no_answer
+        no_answer = 0
         make_bar_graph(l, total_n, name=title, q=q)
 
       else:
