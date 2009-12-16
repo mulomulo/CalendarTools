@@ -78,7 +78,7 @@ class Calendar(object):
         month = int(month[0].split('.jpg')[0])
         l.append((month,image))
       self.l = l
-        
+
     image = self.make_calendar()
 
   def get_images_in_folder(self):
@@ -90,7 +90,7 @@ class Calendar(object):
       self.iptc_extract(item)
       file_list.append(item)
     self.file_list = file_list
-    
+
 
   def make_calendar(self):
     cal_name = self.cal_name
@@ -229,16 +229,18 @@ class Calendar(object):
       self.cal_name = self.cal_name.replace("-", " ")
     else:
       font_size = 90
-      
+
     font = ImageFont.truetype("%s" %self.fontname, font_size)
-##beware dragons 
+##beware dragons
 #    try:
 #      text = self.cal_name.split(".")[0].split("-")[1]
 #    except:
 
     text = self.cal_name
     text = self.cal_name.split('.')[0]
-  
+    if text == "Chora":
+      text = u'Χώρα'
+
     draw.text((x-4, y), "%s" %text, font=font, fill=self.month_col)
 
     y = (j * tn_height + self.border_top + j * gap_y) + 105
@@ -287,7 +289,7 @@ class Calendar(object):
     for word in text:
       w += draw.textsize("%s " %word, font=font)[0]
       if w < max_width:
-        l += "%s " %word 
+        l += "%s " %word
       else:
         lines.append(l)
         l = "%s " %word
@@ -296,7 +298,7 @@ class Calendar(object):
     for text in lines:
       y += spacing + 3
       draw.text((x, y), "%s" %text, font=font, fill=self.month_col)
-    
+
     if self.subset:
       region = self.subset
     else:
@@ -337,11 +339,11 @@ class Calendar(object):
       region = self.subset
     else:
       region = self.region
-    
+
     image_location = r"%s/%s-%s/%s%i-%s-%s.jpg" %(self.output_dir, self.cal_name, self.belongs_to, j, self.mcount, month, self.belongs_to)
     image_location = "%s/%s%i-%s-%s.jpg" %(self.target_directory, j, self.mcount, month, self.belongs_to)
     image_location = "%s/%s%i-%s.jpg" %(self.target_directory, j, self.mcount, self.belongs_to)
-    
+
     image_path = "%s/%s" %(self.output_dir, self.belongs_to)
     if not os.path.exists(image_path):
       os.mkdir(image_path)
@@ -350,7 +352,7 @@ class Calendar(object):
     #image_location = "Calendars/%s/%s%i-%s.png" %(self.cal_name, j, self.mcount, month)
     #self.image.save("%s" %image_location, "PNG")
 
-    
+
   def draw_title(self):
     stat = ImageStat.Stat(self.image)
     s = stat.mean[:3]
@@ -374,6 +376,8 @@ class Calendar(object):
         draw.text((x, y), "%s" %text, font=font, fill=month_col)
         i += 1
     else:
+      if text == "Chora":
+        text = u'Χώρα'
       txt_size = draw.textsize(text, font=font)
       x = int((self.width/2) - (txt_size[0]/2))
       y  = int(self.height * self.title_begin + 70)
@@ -385,7 +389,7 @@ class Calendar(object):
     x = int((self.width/2) - (txt_size[0]/2))
     y  = int(self.height * self.title_year_begin)
     draw.text((x, y), "%s" %text, font=font, fill=self.month_col)
-    self.draw = draw		
+    self.draw = draw
 
 
   def draw_month(self, month):
@@ -409,34 +413,35 @@ class Calendar(object):
       week_days = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
     elif 'greek' in self.language:
       week_days = [u"Δε", u"Τρ", u"Τε", u"Πέ", u"Πα", u"Σά", u"Κυ"]
-      
-    
+
+
     if self.holidays == "en":
       feiertage_2007 = [(1,1), (6,4), (9,4), (7,5), (28,5), (27,8), (25,12), (26,12)]
       feiertage_2008 = [(1,1), (21,3), (24,4), (5,5), (26,5), (25,8), (25,12), (26,12)]
       feiertage_2009 = [(1,1), (10,4), (13,4), (4,5), (25,5), (31,8), (25,12), (28,12)]
       feiertage_2010 = [(1,1), (2,4), (5,4), (3,5), (31,5), (30,8), (27,12), (28,12)]
-      
+
     elif self.holidays == "sc":
       feiertage_2007 = [(1,1), (2,1), (6,4), (9,4), (7,5), (28,5), (6,8), (25,12), (26,12)]
       feiertage_2009 = [(1,1), (2,1), (10,4), (4,5), (25,5), (3,8), (30,11), (25,12), (28,12)]
       feiertage_2010 = [(1,1), (4,1), (2,4), (3,5), (31,5), (1,8), (30,11), (25,12), (28,12)]
-      
+
     elif self.holidays == "nz":
       feiertage_2007 = [(1,1), (2,1), (6,2), (6,4), (9,4), (25,4), (4,6), (22,10), (25,12), (26,12)]
       feiertage_2008 = [(1,1), (2,1), (6,2), (21,3), (24,3), (25,4), (2,6), (27,10), (25,12), (26,12)]
       feiertage_2009 = [(1,1), (2,1), (6,2), (10,4), (13,3), (25,4), (1,6), (26,10), (25,12), (28,12)]
       feiertage_2010 = [(1,1), (4,1), (6,2), (2,4), (5,3), (25,4), (7,6), (25,10), (27,12), (28,12)]
-      
+
     elif self.holidays == "gr":
       feiertage_2009 = [(1,1), (6,1), (9,3), (25,3), (1,4), (17,4), (20,4), (1,5), (8,6), (15,8), (1,10), (28,10), (25,12), (26,12)]
-      
+      feiertage_2010 = [(1,1), (2,4), (5,4), (1,5), (13,5), (24,5), (3,10), (24,12), (25,12), (26,12), (31,12)]
+
     elif self.holidays == "de":
       feiertage_2007 = [(1,1), (6,1), (6,4), (9,4), (1,5), (17,5), (28,5), (7,6), (15,8), (3,10), (1,11), (25,12), (26,12)]
       feiertage_2008 = [(1,1), (6,1), (21,3), (24,3), (1,5), (12,5), (22,5), (8,8), (15,8), (3,10), (31,10), (1,11), (19,11), (25,12), (26,12)]
       feiertage_2009 = [(1,1), (10,4), (13,4), (1,5), (21,5), (1,6), (3,10), (24,12), (25,12), (26,12), (31,12)]
       feiertage_2010 = [(1,1), (2,4), (5,4), (1,5), (13,5), (24,5), (3,10), (24,12), (25,12), (26,12), (31,12)]
-      
+
     elif self.holidays == "by":
       feiertage_2007 = [(1,1), (6,1), (6,4), (9,4), (1,5), (17,5), (28,5), (7,6), (15,8), (3,10), (1,11), (25,12), (26,12)]
       feiertage_2008 = [(1,1), (21,3), (24,3), (1,5), (12,5), (22,5), (8,8), (15,8), (3,10), (31,10), (1,11), (19,11), (25,12), (26,12)]
@@ -584,11 +589,11 @@ class Calendar(object):
     m = int((image_path.split(".jpg")[0][-2:]).replace("\\", "")) -1
     im = Image.open(image_path)
     iptc_d = IPTC.getiptcinfo(im)
-    
+
     #for i in xrange(120):
       #s = iptc_d.get((2,i), "None")
       #print i, s
-    
+
     if iptc_d:
       self.iptc.setdefault(image_path,{'title':iptc_d.get((2, 5), ""),
                                        'headline':iptc_d.get((2,105), ""),
@@ -640,7 +645,7 @@ if __name__ == "__main__":
 
   #cal_name = "Anna & Kati"
   #print_location_in_index = []
-  
+
   #cal_name = "NZ Churches"
   #print_location_in_index = ['headline', 'location', 'city',]
 
@@ -652,10 +657,10 @@ if __name__ == "__main__":
 
   #cal_name = "Rabbits"
   #print_location_in_index = []
-  
+
   #cal_name = "Fell End"
   #print_location_in_index = []
-  
+
   #print_location_in_index = ['location', 'city', 'province', 'country']
   #print_location_in_index = ['headline', 'location', 'city', 'country']
   #print_location_in_index = ['headline', 'location', 'province',]
@@ -666,22 +671,22 @@ if __name__ == "__main__":
   #language = "english-nz"
   #language = "english-sc"
   #language = "greek-ne"
-  
+
   cal_name = "Easter.Nadine.english.de"
   print_location_in_index = ['location']
-  
+
   cal_name = "Stencil.Matthias.german.de"
   print_location_in_index = []
 
   cal_name = u"Μετέωρα.David.greek.gr"
   print_location_in_index = []
-  
+
   cal_name = u"Μετέωρα.Dieter.german.de"
   print_location_in_index = []
-  
+
   cal_name = u"Μετέωρα.LindaDP.english.en"
   print_location_in_index = []
-  
+
   cal_name = u"Μετέωρα.Granny.english.en"
   print_location_in_index = []
 
@@ -690,30 +695,30 @@ if __name__ == "__main__":
 
   cal_name = u"Μετέωρα.Michaela.german.de"
   print_location_in_index = []
-  
 
-  
+
+
   cal_name = u"Chicken"
   belongs_to = "LorraineJim"
-  
+
   cal_name = u"White"
   belongs_to = "Ben"
 
   cal_name = u"Osaka"
   belongs_to = "Werner"
-  
+
   #language = "english"
   #holidays = "en"
   #print_location_in_index = []
 
   cal_name = u"Adventures of a-Small Farmer.Johannes.english.de"
 
-  
+
   #cal_name = u"Μόνο λόγια.Karen.english.en"
   #print_location_in_index = ['location']
   #calendar_caption = "Hello Rabbit's Friend!"
 
-  
+
   cal_name = u"Balloon.Janetta-german.en"
   calendar_caption = "Hello Rabbit's Friend!"
   print_location_in_index = ['location']
@@ -722,21 +727,33 @@ if __name__ == "__main__":
     'name':
       'Fell End',
     'belongs_to':
-      ['FellEnd.Bohmwick-english.de', 'FellEnd.Booth-english.en', 'FellEnd.DebbieJulian-english.en', 'FellEnd.DebbiePaul-english.en', 'FellEnd.HelgaColin-english.en',
-       'FellEnd.Janetta-english.en', 'FellEnd.Larissa-english.en', 'FellEnd.Steffi-english.en'],
+      ['FellEnd.Pohl-english.en', 'FellEnd.Bohmwick-english.de', 'FellEnd.Booth-english.en', 'FellEnd.Warren-english.en', 'FellEnd.FellEnd-english.en',
+       'FellEnd.Janetta-english.en', 'FellEnd.Larissa-english.en', ],
     'calendar_caption':
-      "These pictures were taken in Fell end in July 2009",
+      "These pictures were taken on the Fell End Weekend in July 2009",
     'print_location_index':
-      ['location']
+      ['']
   }
-  
+
+  Rabbits= {
+    'name':
+      'Rabbits',
+    'belongs_to':
+      ['Aileen-english.en'],
+    'calendar_caption':
+      "Rabbits. Rabbits everywhere. But mainly in New Zealand and Greece.",
+    'print_location_index':
+      ['country', 'city']
+  }
+
+
   Sheep = {
     'name':
       'Sheep',
     'belongs_to':
       ['Johannes-german.de', 'Hazel-english.en', 'Oleg-english.en', 'SuziSimon-english.en'],
     'calendar_caption':
-      "These sheep were photographed in various locations around the globe",
+      "These sheep were photographed in various locations around the globe. But mostly in Britain.",
     'print_location_index':
       ['country', 'location']
   }
@@ -745,8 +762,8 @@ if __name__ == "__main__":
     'name':
       'New Zealand',
     'belongs_to':
-      ['Christine-german.de', 'Ratz-german.de', 'Dieter-german.de', 'Nadine-english.de', 'Sebastian-german.de', 'KateRich-english.sc', 'OlgaDima-english.en',
-       'Catherine-english.en', 'Victoria-english.en', 'David-english.en', 'KarenJames-english.en', 'MargaretRichard-english.en', 'Marcus-english.nz', 'Paul-english.en',
+      ['Christine-german.de', 'XRatz-german.de', 'XDieter-german.de', 'XNadine-english.de', 'XSebastian-german.de', 'KateRich-english.sc', 'OlgaDima-english.en',
+       'Catherine-english.en', 'Victoria-english.en', 'XDavid-english.en', 'KarenJames-english.en', 'XMargaretRichard-english.en', 'XMarcus-english.nz', 'Paul-english.en',
        'Karen-english.en',],
     'calendar_caption':
       "These images were taken in December 2008 and January 2009. We started out on Banks Peninsula, on the east coast of the South Islands, drove across Arthur's Pass\
@@ -754,47 +771,59 @@ if __name__ == "__main__":
     'print_location_index':
       ['headline', 'location', 'city', 'province']
   }
-  
+
   Istanbul = {
     'name':
       'Istanbul',
     'belongs_to':
-      ['Zoltan-english.en', 'Olly-english.en', 'Mathias-english.en', 'Leigh-english.en', 'Luc-english.en', 'Richard-english.en', 'Judith-english.en',],
+      ['David-english.en', 'Zoltan-english.en', 'Olly-english.en', 'Mathias-english.en', 'Leigh-english.en', 'Luc-english.en', 'Richard-english.en', 'Judith-english.en', 'Emma-english.sc', 'Alex-english.en'],
     'calendar_caption':
-      "A selection of images taken when walking around in Istanbul during the European Crytallographic Meeting in August 2009",
+      "This is a fairly random selection of images taken during a one-week stay in Istanbul in August 2009. Istanbul is the 5th largest city in the world with about 11M inhabitants with papers and a further estimated 6M without.",
     'print_location_index':
       ['location']
   }
 
-  Amorgos = {
+  DurhamCathedral = {
     'name':
-      'Amorgos',
+      'Durham-Cathedral',
     'belongs_to':
-      ['Carsten-greek.de', 'Volker-greek.de', 'Walter-greek.de', 'Dina-greek.gr', 'Periklies-greek.gr', 'Kallioope-greek.gr',
-       'Sabine-greek.gr', 'Thomas-greek.de', 'Manfred-greek.gr', 'CarolineOliver-greek.gr', 'Doris-greek.gr', 'Marco-greek.gr',
-       'FerdinandTraudel-greek.gr', 'MartinaJack-greek.gr', 'Heribert-german.de'],
+      ['Opa-german.de', 'Ben-english.en'],
     'calendar_caption':
-      "All images were taken in Amorgos in September 2009",
+      "These images were all taken during an open photography event in Durham Cathedral in Jun2 2009. Normally, photography is prohibited inside the cathedral. A few hundred people turned up for the event...",
     'print_location_index':
       ['location']
   }
-  
+
+
+  Amorgos = {
+    'name':
+      'Χώρα',
+    'belongs_to':
+      ['Chora.Carsten-greek.de', 'Chora.Volker-greek.de', 'Chora.Walter-greek.de', 'Chora.Ntina-greek.gr', 'Chora.Perikles-greek.gr', 'Chora.Kalliope-greek.gr',
+       'Chora.Sabine-greek.gr', 'Chora.Thomas-greek.de', 'Chora.Manfred-greek.gr', 'Chora.Doris-greek.gr', 'Chora.Marco-greek.gr',
+       'Chora.Ferdinand-greek.gr', 'Chora.JackMartina-greek.gr', 'Chora.Heribert-german.de', 'Chora.Chora-greek.gr', 'Chora.Michaela-german.de'],
+    'calendar_caption':
+      "All images were taken in Chora on the Greek island of Amorgos in September 2009.",
+    'print_location_index':
+      ['location']
+  }
+
   AgriculturalShows = {
     'name':
       'Agricultural-Shows',
     'belongs_to':
-      ['Annette-english.de', 'Graeme-english.sc', 'Colin-english.en', 'Ehmke-english.en', 'LoraineJimmy-english.en', 'LindaDave-english.en', 'Jenny-english.en', 'Gerry-english.nz'],
+      ['Annette-english.de', 'Graeme-english.sc', 'Colin-english.en', 'Ehmke-english.en', 'LoraineJimmy-english.en', 'LindaDave-english.en', 'Jenny-english.en', 'XGerry-english.nz'],
     'calendar_caption':
       "These pictures were taken at two agricultural shows in the North East of England: The Slayley Show in August 2009 and The Blanchland Show in September 2009",
     'print_location_index':
       ['location']
   }
-  
+
   Balloon = {
     'name':
       'Balloon',
     'belongs_to':
-      ['Oma-german.de', 'Birgit-german.de', 'Doph-english.en', 'Chris-english.de', 'Emma-english.sc', 
+      ['Oma-german.de', 'XBirgit-german.de', 'Doph-english.en', 'XChris-english.de',
        'Father-english.sc', 'Granny-english.en', 'Holly-english.en', 'Cloud Nine-english.en'],
     'calendar_caption':
       "These images were taken during a 35 minute balloon ride, taking off in Allensford and landing near Burnopfield - in the North East of England. More pictuers and trace \
@@ -803,11 +832,11 @@ of the flight can be found at http://maps.google.com/maps/ms?ie=UTF&msa=0&msid=1
       ['location']
   }
 
-  Callist = Istanbul
+  Callist = DurhamCathedral
   name = Callist['name']
   calendar_caption = Callist['calendar_caption']
   print_location_in_index = Callist['print_location_index']
-  
+
   for cal_name in Callist['belongs_to']:
 
     if "-" in cal_name:
@@ -819,12 +848,12 @@ of the flight can be found at http://maps.google.com/maps/ms?ie=UTF&msa=0&msid=1
         belongs_to = cal_name.split(".")[1]
       else:
         cal_name = name
-    
+
     if "." in cal_name:
       belongs_to = cal_name.split('.')[1]
-    
-    basedir = 'C:/Users/Horst/Pictures/Output/Calendars/' 
-    output_dir = 'C:/Users/Horst/Pictures/Output/Calendars/' 
+
+    basedir = 'C:/Users/Horst/Pictures/Output/Calendars/'
+    output_dir = 'C:/Users/Horst/Pictures/Output/Calendars/'
     print u"Making %s" %cal_name
     print u"Making Calendar"
     year = "2010"
@@ -832,9 +861,9 @@ of the flight can be found at http://maps.google.com/maps/ms?ie=UTF&msa=0&msid=1
     feiertage = True
     a = Calendar(year = year, language = language, cal_name = cal_name, basedir = basedir, bw = bw, feiertage = feiertage, print_location_in_index = print_location_in_index, belongs_to = belongs_to, holidays = holidays, calendar_caption = calendar_caption, output_dir = output_dir)
     a.run()
-  
 
-#### AMORGOS  
+
+#### AMORGOS
   #cal_l = ['Manolis','Walter','Carsten','Marco','Doris','TraudlFerdinand','Roland','Heribert','Thomas','Sabine','Kalliope','Volker','Ntina']
   #cal_l = ['Martina']
   #i = 0
@@ -847,7 +876,7 @@ of the flight can be found at http://maps.google.com/maps/ms?ie=UTF&msa=0&msid=1
     #print "Making calendar for %i/%i: %s" %(i, len(cal_l), name)
     #a = Calendar(year = year, language = language, cal_name = cal_name, basedir = basedir, bw = bw, feiertage = feiertage, print_location_in_index = print_location_in_index, belongs_to = belongs_to, holidays=holidays)
     #a.run()
-  
+
 ###Fell End
   #cal_l = ['CarolColin','SueSteve','DebbieJulian','DebbiePaul','HelgeColin','SteffiEhmke']
   ##cal_l = ['SteffiEhmke']
@@ -865,7 +894,7 @@ of the flight can be found at http://maps.google.com/maps/ms?ie=UTF&msa=0&msid=1
       #print "Made calendar %s %i/%i: %s" %(cal_name, i, len(cal_l), name)
     #except:
       #print "Failed to make calendar %s %i/%i: %s" %(cal_name, i, len(cal_l), name)
-      
-    
-    
+
+
+
     ##Previous Calendars
