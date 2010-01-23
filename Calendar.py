@@ -762,9 +762,9 @@ if __name__ == "__main__":
     'name':
       'New Zealand',
     'belongs_to':
-      ['Christine-german.de', 'XRatz-german.de', 'XDieter-german.de', 'XNadine-english.de', 'XSebastian-german.de', 'KateRich-english.sc', 'OlgaDima-english.en',
-       'Catherine-english.en', 'Victoria-english.en', 'XDavid-english.en', 'KarenJames-english.en', 'XMargaretRichard-english.en', 'XMarcus-english.nz', 'Paul-english.en',
-       'Karen-english.en',],
+      ['NewZealand-english.en', 'XChristine-german.de', 'XRatz-german.de', 'XDieter-german.de', 'XNadine-english.de', 'XSebastian-german.de', 'KateRich-english.sc', 'XOlgaDima-english.en',
+       'XCatherine-english.en', 'XVictoria-english.en', 'XDavid-english.en', 'XKarenJames-english.en', 'XMargaretRichard-english.en', 'XMarcus-english.nz', 'XPaul-english.en',
+       'XKaren-english.en',],
     'calendar_caption':
       "These images were taken in December 2008 and January 2009. We started out on Banks Peninsula, on the east coast of the South Islands, drove across Arthur's Pass\
  to the West Coast, then up to Farewell Spit. We ended up in Wellington and the Wairarapa, in the south of the North Island.",
@@ -776,7 +776,7 @@ if __name__ == "__main__":
     'name':
       'Istanbul',
     'belongs_to':
-      ['David-english.en', 'Zoltan-english.en', 'Olly-english.en', 'Mathias-english.en', 'Leigh-english.en', 'Luc-english.en', 'Richard-english.en', 'Judith-english.en', 'Emma-english.sc', 'Alex-english.en'],
+      ['Istanbul-english.en', 'XDavid-english.en', 'XZoltan-english.en', 'XOlly-english.en', 'XMathias-english.en', 'XLeigh-english.en', 'XLuc-english.en', 'XRichard-english.en', 'XJudith-english.en', 'XEmma-english.sc', 'XAlex-english.en'],
     'calendar_caption':
       "This is a fairly random selection of images taken during a one-week stay in Istanbul in August 2009. Istanbul is the 5th largest city in the world with about 11M inhabitants with papers and a further estimated 6M without.",
     'print_location_index':
@@ -787,12 +787,46 @@ if __name__ == "__main__":
     'name':
       'Durham-Cathedral',
     'belongs_to':
-      ['Opa-german.de', 'Ben-english.en'],
+      ['Opa-german.de', 'CraigBarbara-english.en', 'Gill-english.en', 'Lami-english.en', ],
     'calendar_caption':
       "These images were all taken during an open photography event in Durham Cathedral in Jun2 2009. Normally, photography is prohibited inside the cathedral. A few hundred people turned up for the event...",
     'print_location_index':
       ['location']
   }
+
+  Sand = {
+    'name':
+      'Sand',
+    'belongs_to':
+      ['Sarah-english.en', 'Werner-german.de', 'Sand-english.en', 'Elinor-english.en', 'RF-english.en', 'Volker-german.de', 'Ben-english.en'],
+    'calendar_caption':
+      "Sometimes, it is nice to not only look at the sea, but straight down towards your feet. It's astonishing what you can see there.",
+    'print_location_index':
+    ['country', 'location',]
+  }
+
+  Colours = {
+    'name':
+      'Colours',
+    'belongs_to':
+      ['Colours-english.en', 'JohnC-english.en', 'JuliaFiona-english.en', 'Stefan-german.de', 'Roland-german.de'],
+    'calendar_caption':
+      "A series of unrelated images - except that something about their overall colour appearance defines something in common.",
+    'print_location_index':
+    ['country', 'city']
+  }
+
+  Walls = {
+    'name':
+      'Walls',
+    'belongs_to':
+      ['Walls-english.en', 'Anna-english.en', 'Rob-english.nz', 'Adrian-english.en', 'Birger-german.de', 'Helena-english.en', 'RolandB-german.de'],
+    'calendar_caption':
+      "Walls are everywhere. Walls surround us. We don't normally look at walls very much. If you do, and take pictures of them, people laugh at you. Here are some walls.",
+    'print_location_index':
+    ['country', 'city']
+  }
+
 
 
   Amorgos = {
@@ -832,7 +866,29 @@ of the flight can be found at http://maps.google.com/maps/ms?ie=UTF&msa=0&msid=1
       ['location']
   }
 
-  Callist = DurhamCathedral
+  Aileen= {
+    'name':
+      'Aileen',
+    'belongs_to':
+      ['Cath-english.sc'],
+    'calendar_caption':
+      "",
+    'print_location_index':
+    ['country', 'city']
+  }
+
+  Matiu= {
+    'name':
+      'Matiu',
+    'belongs_to':
+      ['Paolo-english.nz'],
+    'calendar_caption':
+      "",
+    'print_location_index':
+    ['country', 'city']
+  }
+
+  Callist = Istanbul
   name = Callist['name']
   calendar_caption = Callist['calendar_caption']
   print_location_in_index = Callist['print_location_index']
