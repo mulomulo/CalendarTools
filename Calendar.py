@@ -13,7 +13,7 @@ import sys
 class Calendar(object):
   def __init__(self, year, language, cal_name, basedir, bw, feiertage, print_location_in_index, belongs_to, holidays, calendar_caption, output_dir):
     #super(Calendar, self).__init__(year, language, cal_name, basedir, bw, feiertage, print_location_in_index, belongs_to, holidays)
-    self.year = '2010'
+    self.year = '2011'
     self.bw = bw
     self.belongs_to = belongs_to
     self.holidays = holidays
@@ -26,6 +26,11 @@ class Calendar(object):
     except:
       self.cal_name = cal_name
       self.subset = False
+
+    try:
+      self.cal_name = self.cal_name.decode('utf-8')
+    except:
+      pass
 
     self.language = language
     try:
@@ -83,6 +88,8 @@ class Calendar(object):
 
   def get_images_in_folder(self):
     src_folder = "%s/src/%s/" %(self.basedir, self.cal_name)
+    if not os.path.exists(src_folder):
+      print "Problem going to this location: %u" %self.cal_name
     file_list = []
     g = glob.glob("%s//*.jpg" %(src_folder))
     for item in g:
@@ -142,6 +149,10 @@ class Calendar(object):
     self.tn_size = 0
 
     self.fontname = "trebuc.TTF"
+    self.fontname_bold = "trebucbd.TTF"
+#    self.fontname = "cambria.ttc"
+#    self.fontname_bold = "cambriab.ttf"
+
     self.week_fontsize = 52
     self.mcount = 0
     l = self.l
@@ -161,7 +172,7 @@ class Calendar(object):
         continue
       self.month = months[sheet[0]-1]
       try:
-        print "Making %s" %self.month
+        print u"Making %s" %self.month
       except:
         print "Printing something with strange Characters"
       self.image_src = sheet[1]
@@ -244,8 +255,7 @@ class Calendar(object):
     draw.text((x-4, y), "%s" %text, font=font, fill=self.month_col)
 
     y = (j * tn_height + self.border_top + j * gap_y) + 105
-    fontname = "trebucbd.TTF"
-    font = ImageFont.truetype("%s" %fontname, 20)
+    font = ImageFont.truetype("%s" %self.fontname_bold, 20)
     text = "Horst Puschmann"
     draw.text((x, y), "%s" %text, font=font, fill=self.month_col)
 
@@ -265,13 +275,11 @@ class Calendar(object):
     draw.text((x, y), "%s" %text, font=font, fill=self.month_col)
 
     y += spacing
-    fontname = "trebucbd.TTF"
-    font = ImageFont.truetype("%s" %fontname, 20)
+    font = ImageFont.truetype("%s" %self.fontname_bold, 20)
     text = "horst.puschmann@gmail.com"
     draw.text((x, y), "%s" %text, font=font, fill=self.month_col)
 
-    fontname = "trebuc.TTF"
-    font = ImageFont.truetype("%s" %fontname, 24)
+    font = ImageFont.truetype("%s" %self.fontname, 24)
     y += 40
     x = self.border_sides
 #    for text in self.msg:
@@ -420,27 +428,32 @@ class Calendar(object):
       feiertage_2008 = [(1,1), (21,3), (24,4), (5,5), (26,5), (25,8), (25,12), (26,12)]
       feiertage_2009 = [(1,1), (10,4), (13,4), (4,5), (25,5), (31,8), (25,12), (28,12)]
       feiertage_2010 = [(1,1), (2,4), (5,4), (3,5), (31,5), (30,8), (27,12), (28,12)]
+      feiertage_2011 = [(3,1), (22,4), (25,4), (2,5), (30,5), (29,8), (26,12), (27,12)]
 
     elif self.holidays == "sc":
       feiertage_2007 = [(1,1), (2,1), (6,4), (9,4), (7,5), (28,5), (6,8), (25,12), (26,12)]
       feiertage_2009 = [(1,1), (2,1), (10,4), (4,5), (25,5), (3,8), (30,11), (25,12), (28,12)]
       feiertage_2010 = [(1,1), (4,1), (2,4), (3,5), (31,5), (1,8), (30,11), (25,12), (28,12)]
+      feiertage_2011 = [(3,1), (4,1), (22,4), (2,5), (30,5), (29,8), (30,11), (26,12), (27,12)]
 
     elif self.holidays == "nz":
       feiertage_2007 = [(1,1), (2,1), (6,2), (6,4), (9,4), (25,4), (4,6), (22,10), (25,12), (26,12)]
       feiertage_2008 = [(1,1), (2,1), (6,2), (21,3), (24,3), (25,4), (2,6), (27,10), (25,12), (26,12)]
       feiertage_2009 = [(1,1), (2,1), (6,2), (10,4), (13,3), (25,4), (1,6), (26,10), (25,12), (28,12)]
       feiertage_2010 = [(1,1), (4,1), (6,2), (2,4), (5,3), (25,4), (7,6), (25,10), (27,12), (28,12)]
+      feiertage_2011 = [(1,1), (2,1), (6,2), (22,4), (25,4), (6,6), (24,10), (25,12), (26,12)]
 
     elif self.holidays == "gr":
       feiertage_2009 = [(1,1), (6,1), (9,3), (25,3), (1,4), (17,4), (20,4), (1,5), (8,6), (15,8), (1,10), (28,10), (25,12), (26,12)]
       feiertage_2010 = [(1,1), (2,4), (5,4), (1,5), (13,5), (24,5), (3,10), (24,12), (25,12), (26,12), (31,12)]
+      feiertage_2011 = [(1,1), (6,1), (25,3), (22,4), (25,4), (1,5), (15,8), (25,12), (26,12)]
 
     elif self.holidays == "de":
       feiertage_2007 = [(1,1), (6,1), (6,4), (9,4), (1,5), (17,5), (28,5), (7,6), (15,8), (3,10), (1,11), (25,12), (26,12)]
       feiertage_2008 = [(1,1), (6,1), (21,3), (24,3), (1,5), (12,5), (22,5), (8,8), (15,8), (3,10), (31,10), (1,11), (19,11), (25,12), (26,12)]
       feiertage_2009 = [(1,1), (10,4), (13,4), (1,5), (21,5), (1,6), (3,10), (24,12), (25,12), (26,12), (31,12)]
       feiertage_2010 = [(1,1), (2,4), (5,4), (1,5), (13,5), (24,5), (3,10), (24,12), (25,12), (26,12), (31,12)]
+      feiertage_2011 = [(1,1), (6,1), (22,4), (25,4), (1,5), (13,6), (3,10), (24,12), (25,12), (26,12), (31,12)]
 
     elif self.holidays == "by":
       feiertage_2007 = [(1,1), (6,1), (6,4), (9,4), (1,5), (17,5), (28,5), (7,6), (15,8), (3,10), (1,11), (25,12), (26,12)]
@@ -451,6 +464,7 @@ class Calendar(object):
     week_2008 = [(), (1, 31), (4, 29), (5, 31), (1, 30), (3, 31), (6, 30), (1, 31), (4, 31), (0, 30), (2, 31), (5, 30), (0, 31)]
     week_2009 = [(), (3, 31), (6, 28), (6, 31), (2, 30), (4, 31), (0, 30), (2, 31), (5, 31), (1, 30), (3, 31), (6, 30), (1, 31)]
     week_2010 = [(), (4, 31), (0, 28), (6, 31), (2, 30), (4, 31), (0, 30), (2, 31), (5, 31), (1, 30), (3, 31), (6, 30), (1, 31)]
+    week_2011 = [(), (5, 31), (1, 28), (1, 31), (4, 30), (6, 31), (2, 30), (4, 31), (0, 31), (3, 30), (5, 31), (1, 30), (3, 31)]
     if self.year == "2008":
       weeks = week_2008
     if self.year == "2009":
@@ -459,6 +473,9 @@ class Calendar(object):
     if self.year == "2010":
       weeks = week_2010
       feiertage = feiertage_2010
+    if self.year == "2011":
+      weeks = week_2011
+      feiertage = feiertage_2011
 
     draw = self.draw
     font = ImageFont.truetype("%s" %self.fontname, self.week_fontsize)
@@ -613,6 +630,25 @@ class Calendar(object):
     else:
       self.iptc.setdefault(image_path,{})
 
+def belongs_to_from_file(year):
+  belongs_to_from_file = {}
+  rFile = open("%s_belongs_to.txt"%year,'r')
+  fi = rFile.readlines()
+  for line in fi:
+    if line.startswith('#'):
+      continue
+    line = line.strip()
+    if not line.startswith('[') and line:
+      belongs_to_from_file.setdefault(cal,[])
+      belongs_to_from_file[cal].append(line.strip())
+    else:
+      cal = line.strip('[').strip(']')
+
+  return belongs_to_from_file
+
+
+
+
 if __name__ == "__main__":
   belongs_to = ""
 
@@ -723,7 +759,7 @@ if __name__ == "__main__":
   calendar_caption = "Hello Rabbit's Friend!"
   print_location_in_index = ['location']
 
-  FellEnd= {
+  FellEnd2010= {
     'name':
       'Fell End',
     'belongs_to':
@@ -734,6 +770,9 @@ if __name__ == "__main__":
     'print_location_index':
       ['']
   }
+
+
+
 
   Rabbits= {
     'name':
@@ -747,7 +786,7 @@ if __name__ == "__main__":
   }
 
 
-  Sheep = {
+  Sheep2010 = {
     'name':
       'Sheep',
     'belongs_to':
@@ -888,17 +927,102 @@ of the flight can be found at http://maps.google.com/maps/ms?ie=UTF&msa=0&msid=1
     ['country', 'city']
   }
 
-  Callist = Istanbul
+## ---------------------------------------------------------------
+## 2011 CALENDARS
+
+
+  China= {
+    'name':
+      'China',
+    'belongs_to':
+      ['#Volker-german.de', '#Matthias-german.de', '#Werner-german.de', 'Rob-english.nz'],
+    'calendar_caption':
+      "The images in ths calendar were taken on two trips to China: One in June and the other in November 2010. I only visited cities - the smallest of which is Fuzhou with 7 million inhabitants.",
+    'print_location_index':
+    ['city', 'location']
+    }
+
+  North_Pennines= {
+    'name':
+      'North Pennines',
+    'belongs_to':
+      ['#Annette-english.de', '#Birgit-german.de', '#Johannes-german.de'],
+    'calendar_caption':
+      "In September 2010, we stayed near the small village of Garrigill, near Alston, in the North Pennines for one week. These images were made on the long walks we took in this amazing and remote region of the very north of England.",
+    'print_location_index':
+    ['city', 'location']
+    }
+
+  FellEnd= {
+    'name':
+      'Fell End',
+    'belongs_to':
+      ['#Oma-german.de'],
+    'calendar_caption':
+      "These pictures were taken on the Fell End Weekend in February 2010. It was cold.",
+    'print_location_index':
+      ['']
+  }
+
+  EasterInAmorgos= {
+    'name':
+      'Πάσχα στην-Αμοργό',
+    'belongs_to':
+      ['#Christine-german.de','#Michaela-german.de','#Opa-german.de','#Stefan-greek.de','#Dina-greek.gr','#Kalliopi-greek.gr','#Sabina-greek.gr','#Perikles-greek.gr'],
+    'calendar_caption':
+      "Easter in Chora on the island of Amorgos. In 2010 Greek Orthodox Easter was on the very earliest date possible: the 4th of April. It also happened to be on the same day as Easter everywhere else in the world.",
+    'print_location_index':
+      ['']
+  }
+
+  Sheep = {
+    'name':
+      'Sheep',
+    'belongs_to':
+      [],
+    'calendar_caption':
+      "These sheep were photographed in various locations around the globe. But mostly in Britain.",
+    'print_location_index':
+      ['country', 'location']
+  }
+
+  ChrisAndLudo= {
+    'name':
+      'Christina-and Ludovic',
+    'belongs_to':
+      ['Chris-german.de', 'Ludo-english.en'],
+    'calendar_caption':
+      "",
+    'print_location_index':
+      ['country', 'location']
+  }
+
+  BlacktonGrange= {
+    'name':
+      'Blackton Grange',
+    'belongs_to':
+      ['Carol-english.en', 'Jannetta-english.en', 'Steffi-english.en'],
+    'calendar_caption':
+      "Carol's 40th Birthday party in Blackton Grange.",
+    'print_location_index':
+      ['country', 'location']
+  }
+
+  Callist = EasterInAmorgos
   name = Callist['name']
   calendar_caption = Callist['calendar_caption']
   print_location_in_index = Callist['print_location_index']
+  year = "2011"
+  a = belongs_to_from_file(year)
+  Callist['belongs_to'].extend(a[name])
 
   for cal_name in Callist['belongs_to']:
-
+    belongs_to = cal_name.split("-")[0]
     if "-" in cal_name:
+      if '#' in belongs_to:
+        continue
       language = cal_name.split("-")[1].split(".")[0]
       holidays = cal_name.split("-")[1].split(".")[1]
-      belongs_to = cal_name.split("-")[0]
       if "." in belongs_to:
         cal_name = cal_name.split("-")[0]
         belongs_to = cal_name.split(".")[1]
@@ -910,9 +1034,12 @@ of the flight can be found at http://maps.google.com/maps/ms?ie=UTF&msa=0&msid=1
 
     basedir = 'C:/Users/Horst/Pictures/Output/Calendars/'
     output_dir = 'C:/Users/Horst/Pictures/Output/Calendars/'
-    print u"Making %s" %cal_name
+    try:
+      print u"++++++++++++++++++++\n\nMaking '%s' for %s" %(cal_name, belongs_to)
+    except:
+      print "error printing names"
     print u"Making Calendar"
-    year = "2010"
+    year = "2011"
     bw = False
     feiertage = True
     a = Calendar(year = year, language = language, cal_name = cal_name, basedir = basedir, bw = bw, feiertage = feiertage, print_location_in_index = print_location_in_index, belongs_to = belongs_to, holidays = holidays, calendar_caption = calendar_caption, output_dir = output_dir)
@@ -950,7 +1077,6 @@ of the flight can be found at http://maps.google.com/maps/ms?ie=UTF&msa=0&msid=1
       #print "Made calendar %s %i/%i: %s" %(cal_name, i, len(cal_l), name)
     #except:
       #print "Failed to make calendar %s %i/%i: %s" %(cal_name, i, len(cal_l), name)
-
 
 
     ##Previous Calendars

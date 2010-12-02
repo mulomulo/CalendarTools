@@ -370,6 +370,7 @@ class PhotobookPageMaker(object):
   def initialise_picture(self):
     p = self.picture
     self.name = self.iptc[p].get('title')
+    print self.name
     self.picture_obj = Image.open("%s" %(p))
     if self.picture_obj.size[0] > self.width:
       if self.page_left_right == 'left':
@@ -396,6 +397,7 @@ class PhotobookPageMaker(object):
       else:
         self.page_left_right = "right"
     except:
+      self.page_left_right = "left"
       pass
 
 
@@ -441,7 +443,7 @@ class PhotobookPageMaker(object):
 
       i += 1
     self.IM.save("%s\%s.jpg" %(self.output_folder,self.filename), "JPEG", quality=100)
-    print("Done Making ans saving page.")
+    print("Done Making and saving page.")
 
 PPM = PhotobookPageMaker()
 PPM.run()
