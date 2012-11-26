@@ -1,0 +1,102 @@
+[Fell End]
+stamp=FellEnd-english.en
+
+[County Durham]
+stamp=Durham-german.de
+title=County Durham
+caption=County Durham is in the North East of England, with a population of about half a million people. Durham Cathedral is a UNESCO World Heritage Site and dates back to the 10th century. 
+#ad_image=olexsys$R
+idx_0=Durham Cathedral
+idx_1=Snow in Durham: a rare event
+idx_2=Victorian terraces in Consett
+idx_3=Inside Durham Cathedral
+idx_4=Beamish Museum set in 1913
+idx_5=The Durham Dales
+idx_6=Miners' Gala
+idx_7=Summer in Durham
+idx_8=River Wear in Durham City
+idx_9=Victorian terraces and railway viaduct
+idx_10=Killhope Mining Museum
+idx_11=Lumiere 2012
+idx_12=Durham Cathedral at night
+cap_0=Durham Cathedral in May, seen from Durham University Science Site
+cap_1=Near Shadforth, a small village to the east of Durham City
+cap_2=Victorian terraced houses in Consett, north-west of Durham City
+cap_3=Inside Durham Cathedral
+cap_4=Beamish Museum, near Stanley, is set in 1913
+cap_5=The Durham Dales, to the west of Durham, are great for walking
+cap_6=The annual Miners' Gala is the UK's largest trade union gathering
+cap_7=Summer in Durham
+cap_8=The River Wear flows through the middle of Durham City
+cap_9=Victorian terraces and the railway viaduct in Durham City
+cap_10=Killope lead mining museum in Weardale
+cap_11=Durham Market Square during the Lumiere 'Festival of Light' 2012
+cap_12=Durham Cathedral at night
+
+[Johnnie]
+stamp=DayInBeamish-english.en
+title=A Day in Beamish
+caption=An outing to Beamish Museum on the 4th of November 2012. Johnnie, Thomas, Clare, James, Aileen and Horst all got quite a bit cold on this crisp autumn day.
+
+[Ben]
+stamp=Ben-english.en
+title=Ben
+caption=At Louise and Richard's wedding in Bedford on June 15, 2012. And on the following day in Sherwood Forest.
+
+
+[Schlipsheimer]
+stamp=Schlipsheimer-german.de
+title=Schlipsheimer
+caption=Weihnachten 2011, ein kurzer Besuch im März und dann ein langes Wochenende im Juni 2012..
+
+[Kalliope]
+stamp=Kalliope-english.en
+title=Kalliope 
+caption=Visiting Kalliope in Chora, Amorgos in September 2012.
+
+[Munich]
+stamp=Munich-german.de
+title=Munich
+caption=A few days at a conference (held at the LMU) in Munich in March 2012.
+
+
+
+[Chora]
+stamp=Chora-greek.nz
+title=Chora
+caption=Chora, Amorgos in September 2012.
+
+[Donkeys]
+stamp=Donkeys-english.en
+title=Donkeys
+caption=All of these were photographed in Chora, Amorgos. Some a very long time agao.
+
+
+
+[Boston]
+stamp=Boston-english.en
+title=Boston
+ad_image=olexsys$R
+caption=A week at a conference in Boston's Wharf district didn't really allow for much exploration of this fascinating city. Here are a few images I managed to take when taking time out from the proceedings at the hotel.
+
+
+
+[Sheep]
+stamp=Sheep-english.en
+title=Sheep
+caption=This year's selection consists of sheep in two locations: Fell and Hadrian's Wall at Housesteads. All of them were photographed at the height of British summer.
+
+[Nanning]
+stamp=Nanning-english.sc
+title=Nanning
+name=Nanning
+#ad_image=olexsys$R
+caption=Nanning, in Southern China is a city of over 3 million people that few will ever have heard of before. These images were taken during a 3-day visit to this city.
+
+[Jyvaskyla]
+stamp=Jyvaskyla-english.en
+title=Jyväskylä
+name=Jyvaskyla
+ad_image=olexsys$R
+caption=Two days in Jyväskylä, Finnland.
+ad_image=olexsys.jpg
