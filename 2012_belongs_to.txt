@@ -1,4 +1,4 @@
-[Auerbergland]
+Auerbergland]
 AuerbergEN-english.en
 AuerbergDE-german.de
 

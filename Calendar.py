@@ -1,19 +1,20 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import division
-import PngImagePlugin
-import JpegImagePlugin
-import IptcImagePlugin as IPTC
-import Image
+from PIL import PngImagePlugin
+from PIL import JpegImagePlugin
+from PIL import IptcImagePlugin as IPTC
+from PIL import Image
 import glob, os
-import ImageFont, ImageDraw, ImageChops, ImageStat, ImageEnhance
+from PIL import ImageFont, ImageDraw, ImageChops, ImageStat, ImageEnhance
 import string
 import sys
 
 class Calendar(object):
   def __init__(self, year, language, cal_name, basedir, bw, feiertage, belongs_to, holidays, output_dir, d):
     #super(Calendar, self).__init__(year, language, cal_name, basedir, bw, feiertage, print_location_in_index, belongs_to, holidays)
-    self.year = '2013'
+    self.year = '2018'
+    self.scaling = 1
     self.bw = bw
     self.belongs_to = belongs_to
     self.holidays = holidays
@@ -81,7 +82,7 @@ class Calendar(object):
       for image in self.file_list:
         month = image.split('\\')[-1:]
         try:
-          month = int(month[0].split('.jpg')[0])
+          month = int(month[0].split('.jpg')[0]) + 1
           l.append((month,image))
         except:
           pass
@@ -93,14 +94,17 @@ class Calendar(object):
     src_folder = "%s/src/%s/" %(self.basedir, self.cal_name)
     if not os.path.exists(src_folder):
       try:
-        print "Problem going to this location: %s" %self.cal_name
+        print "Problem going to this location: %s" %src_folder
       except:
         print "can't print calendar name, probably non-ascii problem!"
     file_list = []
     g = glob.glob("%s//*.jpg" %(src_folder))
     for item in g:
       #print "Reading IPTC for %s" %item
-      self.iptc_extract(item)
+      try:
+        self.iptc_extract(item)
+      except:
+        pass
       file_list.append(item)
     self.file_list = file_list
 
@@ -119,19 +123,51 @@ class Calendar(object):
       months = ["Title", u"Ιανουάριος", u"Φεβρουάριος", u"Μάρτης", u"Απρίλιος", u"Μάιος", u"Ιούνιος", u"Ιούλιος", u"Αύγουστος", u"Σεπτέμβριος", u"Οκτώβριος", u"Νοέμβριος", u"Δεκέμβριος"]
     else:
       months = ["Title", "January", "February"]
-    self.height = 1800
-    self.width = 1200
+
+    self.A6 = True
+
+    if self.A6:
+      ##printed.com
+      self.height = 1819
+      self.width = 1311
+
+    else:
+      ## 4x6 print
+      self.height = 1800
+      self.width = 1200
+
+
+    self.scaling_y = self.height/1800
+    self.scaling_x = self.width/1200
+
     self.image_width = 0
     self.image_height = 0
-    self.border_top = 90
-    self.border_sides = 70
+
+    if self.A6:
+      self.border_top = 95 * self.scaling_y
+      self.border_sides = 85 * self.scaling_x
+    else:
+      self.border_top = 90 * self.scaling_y
+      self.border_sides = 70 * self.scaling_x
+
+    self.images_src_width = int(round(self.width - 2*self.border_sides))
+    print "Images in src must be %i px wide!" %self.images_src_width  #1125 for A6
     self.bg_col = (255, 255, 255)
 
     #Distances from the top in fractions
     #self.image_top = 0.06
-    self.month_begin = 0.55
-    self.week_begin = 0.65
-    self.week_days = self.week_begin + 0.06
+    if self.A6:
+      self.month_begin = 0.57
+      self.month_begin = 0.565
+    else:
+      self.month_begin = 0.55
+
+    if self.A6:
+      self.week_begin = 0.66
+      self.week_begin = 0.65
+    else:
+      self.week_begin = 0.65
+    self.week_days = self.week_begin + 0.05
     self.title_begin = 0.70
     self.title_year_begin = 0.85
 
@@ -151,7 +187,11 @@ class Calendar(object):
       self.normal_day_col = (150, 110, 70)
 
     self.tn_per_row = 3
-    self.tn_width = self.width/(self.tn_per_row + 0.6)
+    if self.A6:
+      self.tn_width = self.width/(self.tn_per_row + 0.6)
+    else:
+      self.tn_width = self.width/(self.tn_per_row + 0.6)
+
     self.tn_size = 0
 
 #    self.fontname = "trebuc.TTF"
@@ -160,9 +200,12 @@ class Calendar(object):
     self.fontname_bold = "cambriab.ttf"
     self.index_fontname = "trebuc.TTF"
     self.index_fontname_bold = "trebucbd.TTF"
+    self.index_fontname = "cambria.ttc"
+    self.index_fontname_bold = "cambriab.ttf"
 
 
-    self.week_fontsize = 52
+    self.week_fontsize = int(52 * self.scaling_y)
+    self.week_fontsize = int(round(52 * self.scaling_y))
     self.mcount = 0
     l = self.l
     assert self.l is not None
@@ -219,31 +262,36 @@ class Calendar(object):
     print "Making Index Sheet"
     self.image = Image.new('RGBA', (self.width, self.height), self.bg_col)
     draw = ImageDraw.Draw(self.image)
+    self.draw = draw
     tn_width = self.tn_size[0]
     tn_height = self.tn_size[1]
-    gap_y = 60
-    gap_x = (self.width - 2 * self.border_sides - (self.tn_per_row * tn_width))/(self.tn_per_row -1)
-    text_gap = 6
+    if self.A6:
+      gap_y = 38  * self.scaling_y
+      gap_x = (self.width - 2 * self.border_sides - (self.tn_per_row * tn_width))/(self.tn_per_row -1)
+    else:
+      gap_y = 60  * self.scaling_y
+      gap_x = (self.width - 2 * self.border_sides - (self.tn_per_row * tn_width))/(self.tn_per_row -1)
+
+    text_gap = 4 * self.scaling_y
     i = 0
     j = 0
     for n in xrange(len(self.thumbnails)):
-      x = int(i * tn_width + self.border_sides + i * gap_x)
-      y = int(j * tn_height + self.border_top + j * gap_y)
+      x = int(round(i * tn_width + self.border_sides + i * gap_x))
+      y = int(round(j * tn_height + self.border_top + j * gap_y))
       tn = self.thumbnails[n][0]
       self.make_border(tn, 2)
-      self.image.paste(tn, (int(x),int(y)))
+      self.image.paste(tn, (x,y))
       text = self.makeInfoLine(n)
       ##FUDGE¬!!!!!!!!!!!!!!!!!!!!!!!
       if not text and self.print_location_in_index:
-        text = d.get('idx_%s' %n,' ')
+        text = d.get('idx_%s' %n,' ').decode("utf-8")
 
       if not text and self.print_location_in_index:
         text = raw_input("Enter something: ")
 
-        
-      
+
       if text:
-        font = ImageFont.truetype("%s" %self.fontname, 20)
+        font = ImageFont.truetype("%s" %self.fontname, int(21  * self.scaling_y))
         draw.text((x, y + tn_height + text_gap), "%s" %text, font=font, fill=self.month_col)
       i += 1
       if i == 3:
@@ -251,13 +299,13 @@ class Calendar(object):
         i = 0
 
     x = int(i * tn_width + self.border_sides + i * gap_x)
-    spacing = 30
+    spacing = 30 * self.scaling_x
     y = int((j * tn_height + self.border_top + j * gap_y) - 7)
     if "-" in self.cal_name:
-      font_size = 70
+      font_size = 70 * self.scaling_y
       self.cal_name = self.cal_name.replace("-", " ")
     else:
-      font_size = 90
+      font_size = int(90 * self.scaling_y)
 
     font = ImageFont.truetype("%s" %self.fontname, font_size)
 ##beware dragons
@@ -267,59 +315,65 @@ class Calendar(object):
 
     text = self.cal_name
     text = self.cal_name.split('.')[0]
+    text = d['title']
     if text == "Chora":
-      text = u'Χώρα'
+      text = u'Χώρα Αμοργού'
 
     ad = d.get('ad_image',None)
     if not ad:
-      draw.text((x-4, y), "%s" %text, font=font, fill=self.month_col)
+      draw.text((int(x-4 *  self.scaling_x), y), "%s" %text, font=font, fill=self.month_col)
     else:
-      im = Image.open("%s/src/%s_400.jpg" %(self.basedir, ad.split('$')[0]))
+      s = 400
+      im = Image.open("%s/src/%s_%s.jpg" %(self.basedir, ad.split('$')[0], s))
       orig_width = im.size[0]
       orig_height = im.size[1]
       #px = self.image_width + self.border_sides - orig_width
       #py = 1480
-      self.image.paste(im, (x,y + 10))
+      self.image.paste(im, (int(x),int(y + 11 * self.scaling_y)))
 
 
     if "trebuc" in self.index_fontname:
-      fudge_y = 97
+      fudge_y = 97 * self.scaling_y
     elif "camb" in self.index_fontname:
-      fudge_y = 100
+      fudge_y = 100 * self.scaling_y
 
 
+    address_font = int(24 * self.scaling_y)
+    x = x + 5
     y = (j * tn_height + self.border_top + j * gap_y) + fudge_y
-    font = ImageFont.truetype("%s" %self.index_fontname_bold, 20)
-    text = "Horst Puschmann"
+    font = ImageFont.truetype("%s" %self.index_fontname_bold, address_font)
+    text = "Horst & Aileen"
     if ad: text = "OlexSys Ltd."
     draw.text((x, y), "%s" %text, font=font, fill=self.month_col)
 
     y += spacing
-    font = ImageFont.truetype("%s" %self.index_fontname, 20)
-    text = "5 South Street"
+    font = ImageFont.truetype("%s" %self.index_fontname, address_font)
+    text = "47 Orchard Drive"
     if ad: text = "Department of Chemistry"
     draw.text((x, y), "%s" %text, font=font, fill=self.month_col)
 
     y += spacing
-    font = ImageFont.truetype("%s" %self.index_fontname, 20)
-    text = "Sherburn Village"
+    font = ImageFont.truetype("%s" %self.index_fontname, address_font)
+    text = "Durham"
     if ad: text = "Durham University"
     draw.text((x, y), "%s" %text, font=font, fill=self.month_col)
 
     y += spacing
-    font = ImageFont.truetype("%s" %self.index_fontname, 20)
-    text = "Durham DH6 1HP, U.K."
+    font = ImageFont.truetype("%s" %self.index_fontname, address_font)
+    text = "DH1 1LA, U.K."
     if ad: text = "Durham DH1 3LE"
     draw.text((x, y), "%s" %text, font=font, fill=self.month_col)
 
     y += spacing
-    font = ImageFont.truetype("%s" %self.index_fontname_bold, 20)
+    font = ImageFont.truetype("%s" %self.index_fontname_bold, address_font)
     text = "horst.puschmann@gmail.com"
     if ad: text = "horst@olexsys.org"
     draw.text((x, y), "%s" %text, font=font, fill=self.month_col)
 
-    font = ImageFont.truetype("%s" %self.index_fontname, 24)
-    y += 40
+    font = ImageFont.truetype("%s" %self.index_fontname, int(address_font * 1.2))
+    y += 40 * self.scaling_y
+    if self.A6:
+      y += 20
     x = self.border_sides
 #    for text in self.msg:
 #      text = text.replace("\n", "")
@@ -352,8 +406,10 @@ class Calendar(object):
       region = self.subset
     else:
       region = self.region
+    if self.A6:
+      self.draw_marks()
     image_location = "%s/%s/%i-index-%s.jpg" %(self.output_dir, self.belongs_to, 13, self.belongs_to)
-    self.image.save("%s" %image_location, "JPEG", quality=100)
+    self.image.save("%s" %image_location, "JPEG", quality=100, dpi=(300,300))
 #		image_location = "Calendars/%s/%i-index.png" %(self.cal_name, self.mcount+1)
 #		self.image.save("%s" %image_location, "PNG", quality=95)
 
@@ -363,6 +419,8 @@ class Calendar(object):
     self.image = Image.new('RGBA', (self.width, self.height), self.bg_col)
     self.draw = ImageDraw.Draw(self.image)
     self.draw_image()
+    if self.A6:
+      self.draw_marks()
     if month == "Title":
       self.draw_title()
     else:
@@ -398,7 +456,7 @@ class Calendar(object):
     if not os.path.exists(image_path):
       os.mkdir(image_path)
     self.target_directory = "%s/%s%i-%s-%s.jpg" %(image_path, j, self.mcount, self.belongs_to, region)
-    self.image.save("%s" %self.target_directory, "JPEG", quality=100)
+    self.image.save("%s" %self.target_directory, "JPEG", quality=100, dpi=(300,300))
     #image_location = "Calendars/%s/%s%i-%s.png" %(self.cal_name, j, self.mcount, month)
     #self.image.save("%s" %image_location, "PNG")
 
@@ -409,15 +467,16 @@ class Calendar(object):
     month_col = (int(s[0]/2), int(s[1]/2), int(s[2]/2))
     draw = self.draw
     self.draw_caption()
-    font = ImageFont.truetype("%s" %self.fontname, 130)
+    font = ImageFont.truetype("%s" %self.fontname, int(130 * self.scaling_y))
     text = self.cal_name.split('.')[0]
     text = d['title']
     text = text.decode("utf-8")
+    n_lines = text.count("-")
     t = text.split("-")
     if len(t) > 1:
       i = 0
       for text in t:
-        text_size = 120
+        text_size = int(120  * self.scaling_y)
         if i == 0:
           font = ImageFont.truetype("%s" %self.fontname, text_size)
           txt_size = draw.textsize(text, font=font)
@@ -426,17 +485,18 @@ class Calendar(object):
           txt_size = draw.textsize(text, font=font)
         x = int(int((self.width/2) - (txt_size[0]/2)))
         y  = int(self.height * self.title_begin + i * text_size)
+        y = y - n_lines * (text_size*0.6)
         draw.text((x, y), "%s" %text, font=font, fill=month_col)
         i += 1
     else:
       if text == "Chora":
-        text = u'Χώρα'
+        text = u'Χώρα Αμοργού'
       txt_size = draw.textsize(text, font=font)
       x = int((self.width/2) - (txt_size[0]/2))
-      y  = int(self.height * self.title_begin + 70)
+      y  = int(self.height * self.title_begin + 70 * self.scaling_y)
       draw.text((x, y), "%s" %text, font=font, fill=month_col)
 
-    font = ImageFont.truetype("%s" %self.fontname, 90)
+    font = ImageFont.truetype("%s" %self.fontname, int(90 * self.scaling_y))
     text = self.year
     txt_size = draw.textsize(text, font=font)
     x = int((self.width/2) - (txt_size[0]/2))
@@ -444,22 +504,59 @@ class Calendar(object):
     draw.text((x, y), "%s" %text, font=font, fill=self.month_col)
     self.draw = draw
 
+  def draw_marks(self):
+    z = int(118.11 * 0.3)
+    m = 20
+    btop = z
+    top = 0
+    bright = self.width - z
+    right = self.width
+    bleft = z
+    left = 0
+    bbottom = self.height - z
+    bottom = self.height
+    draw = self.draw
+
+    #VERTICALS
+    self.draw.line((bright,top, bright,btop - m), fill=000)
+    self.draw.line((bleft,top, bleft,btop - m), fill=000)
+    self.draw.line((bright,bottom, bright,bbottom + m), fill=000)
+    self.draw.line((bleft,bottom, bleft,bbottom + m ), fill=000)
+    #HORIZONTALS
+    self.draw.line((right,btop, bright + m,btop), fill=000)
+    self.draw.line((left,btop, bleft - m, btop), fill=000)
+    self.draw.line((right,bbottom, bright + m, bbottom), fill=000)
+    self.draw.line((left,bbottom, bleft -m, bbottom), fill=000)
+
 
   def draw_caption(self):
     draw = self.draw
-    font = ImageFont.truetype("%s" %self.fontname, 26)
-    x = 926
-    y = 895
-    ty = y + 2
+    font = ImageFont.truetype("%s" %self.fontname, int(26 * self.scaling_y))
+    font = ImageFont.truetype("%s" %self.fontname, int(30 * self.scaling_y))
+    caption_colour = self.normal_day_col
+    extra_y = 6
+    if self.A6:
+      x = 926  * self.scaling_x
+      y = (935 - extra_y) * self.scaling_y
+    else:
+      x = 926  * self.scaling_x
+      y = 895 * self.scaling_y
+
+    ty = int((y) * self.scaling_y)
     tx = self.border_sides
     img_src =d.get('ad_image',None)
-    img_width = 200
+    img_width = 200  * self.scaling_x
     text = d.get('cap_%s' %self.mcount,None)
     if text:
       text = text.decode("utf-8")
     if text:
       txt_size = draw.textsize(text, font=font)
+
     if img_src:
+      im = Image.open("%s/src/%s_200.jpg" %(self.basedir, img_src.rstrip("$R")))
+      width = im.size[0]
+      height = im.size[1]
+
       if '$L' in img_src:
         x = self.border_sides
         img_src = img_src.strip('$L')
@@ -469,31 +566,30 @@ class Calendar(object):
         img_src = img_src.strip('$C')
         tx = self.border_sides
       elif '$R' in img_src:
-        x = int(self.border_sides + self.image_width - img_width)
+        x = int(self.border_sides + self.image_width - width - 3)
         img_src = img_src.strip('$R')
         tx = self.border_sides
 
-      im = Image.open("%s/src/%s.jpg" %(self.basedir, img_src))
-      orig_width = im.size[0]
-      orig_height = im.size[1]
 #      new_width = 200
 #      new_height = (orig_height/orig_width) * new_width
 #      im = im.resize((int(new_width), int(new_height)))
-      self.image.paste(im, (x,y))
+      self.image.paste(im, (int(x - 3),int(y + 4 + extra_y)))
     if text:
-      draw.text((tx, ty), "%s" %text, font=font, fill="#ababab")
+      draw.text((tx, ty), "%s" %text, font=font, fill=self.normal_day_col)
     self.draw = draw
-    
+
 
   def draw_month(self, month):
     draw = self.draw
-    font = ImageFont.truetype("%s" %self.fontname, 80)
+    font = ImageFont.truetype("%s" %self.fontname, int(80  * self.scaling_y))
     text = month.upper()
     text = month
     #print u"Making %s" %(unicode.decode(text))
     txt_size = draw.textsize(text, font=font)
-    x = int((self.width/2) - (txt_size[0]/2))
-    y  = int(self.height * self.month_begin)
+    x = int(round(self.width/2) - (txt_size[0]/2))
+    y  = int(round(self.height * self.month_begin))
+    if self.A6:
+      y += 12
     draw.text((x, y), "%s" %text, font=font, fill=self.month_col)
     self.draw = draw
 
@@ -514,6 +610,11 @@ class Calendar(object):
       feiertage_2011 = [(3,1), (22,4), (25,4), (2,5), (30,5), (29,8), (26,12), (27,12)]
       feiertage_2012 = [(2,1), (6,4), (9,4), (7,5), (4,6), (5,6), (27,8), (25,12), (26,12)]
       feiertage_2013 = [(1,1), (29,3), (1,4), (6,5), (27,5), (26,8), (25,12), (26,12)]
+      feiertage_2014 = [(1,1), (18,4), (21,4), (5,5), (26,5), (25,8), (25,12), (26,12)]
+      feiertage_2015 = [(1,1), (3,4), (6,4), (4,5), (25,5), (31,8), (25,12), (28,12)]
+      feiertage_2016 = [(1,1), (25,3), (28,3), (2,5), (30,5), (29,8), (26,12), (27,12)]
+      feiertage_2017 = [(2,1), (14,4), (17,4), (1,5), (29,5), (28,8), (25,12), (26,12)]
+      feiertage_2018 = [(1,1), (30,3), (2,4), (7,5), (28,5), (27,8), (25,12), (26,12)]
 
     elif self.holidays == "sc":
       feiertage_2007 = [(1,1), (2,1), (6,4), (9,4), (7,5), (28,5), (6,8), (25,12), (26,12)]
@@ -522,6 +623,7 @@ class Calendar(object):
       feiertage_2011 = [(3,1), (4,1), (22,4), (2,5), (30,5), (29,8), (30,11), (26,12), (27,12)]
       feiertage_2012 = [(2,1), (3,1), (6,4), (9,4), (7,5), (4,6), (5,6), (27,8), (25,12), (26,12)]
       feiertage_2013 = [(1,1), (2,1), (29,3), (1,4), (6,5), (27,5), (26,8), (2,12), (25,12), (26,12)]
+      feiertage_2014 = [(1,1), (2,1), (18,4), (21,4), (5,5), (26,5), (4,8), (1,12), (25,12), (26,12)]
 
     elif self.holidays == "nz":
       feiertage_2007 = [(1,1), (2,1), (6,2), (6,4), (9,4), (25,4), (4,6), (22,10), (25,12), (26,12)]
@@ -531,12 +633,16 @@ class Calendar(object):
       feiertage_2011 = [(1,1), (2,1), (6,2), (22,4), (25,4), (6,6), (24,10), (25,12), (26,12)]
       feiertage_2012 = [(2,1), (6,2), (6,4), (9,4), (25,4), (4,6), (22,10), (25,12), (26,12)]
       feiertage_2013 = [(1,1), (6,2), (29,3), (1,4), (25,4), (3,6), (28,10), (25,12), (26,12)]
+      feiertage_2014 = [(1,1), (2,1), (6,2), (18,4), (21,4), (25,4), (2,6), (27,10), (25,12), (26,12)]
+      feiertage_2015 = [(1,1), (2,1), (6,2), (3,4), (6,4), (27,4), (1,6), (26,10), (25,12), (26,12)]
 
     elif self.holidays == "gr":
       feiertage_2009 = [(1,1), (6,1), (9,3), (25,3), (1,4), (17,4), (20,4), (1,5), (8,6), (15,8), (1,10), (28,10), (25,12), (26,12)]
       feiertage_2010 = [(1,1), (2,4), (5,4), (1,5), (13,5), (24,5), (3,10), (24,12), (25,12), (26,12), (31,12)]
       feiertage_2011 = [(1,1), (6,1), (25,3), (22,4), (25,4), (1,5), (15,8), (25,12), (26,12)]
       feiertage_2012 = [(1,1), (6,1), (27,2), (25,3), (13,4), (16,4), (1,5), (4,6), (15,8), (28,10), (25,12), (26,12)]
+      feiertage_2013 = [(1,1), (6,1), (18,3), (25,3), (1,5), (3,5), (6,5), (24,6), (15,8), (28,10), (25,12), (26,12)]
+      feiertage_2014 = [(1,1), (6,1), (3,3), (25,3), (18,4), (21,4), (1,5), (9,6), (15,8), (28,10), (25,12), (26,12)]
 
     elif self.holidays == "de":
       feiertage_2007 = [(1,1), (6,1), (6,4), (9,4), (1,5), (17,5), (28,5), (7,6), (15,8), (3,10), (1,11), (25,12), (26,12)]
@@ -546,10 +652,13 @@ class Calendar(object):
       feiertage_2011 = [(1,1), (6,1), (22,4), (25,4), (1,5), (13,6), (3,10), (24,12), (25,12), (26,12), (31,12)]
       feiertage_2012 = [(1,1), (6,4), (9,4), (1,5), (17,5), (28,5), (15,8), (3,10), (1,11), (25,12), (26,12)]
       feiertage_2013 = [(1,1), (6,1), (29,3), (31,3), (1,4), (1,5), (9,5), (20,5), (30,5), (3,10), (1,11), (25,12), (26,12)]
+      feiertage_2014 = [(1,1), (6,1), (18,4), (21,4), (1,5), (29,5), (9,6), (19,6), (3,10), (1,11), (25,12), (26,12)]
+      feiertage_2015 = [(1,1), (6,1), (3,4), (6,4), (1,5), (25,5), (4,6), (3,10), (1,11), (25,12), (26,12)]
 
     elif self.holidays == "us":
       feiertage_2013 = [(1,1), (21,1), (18,2), (27,5), (4,7), (2,9), (14,10), (11,11), (28,11), (25,12)]
-      
+      feiertage_2014 = [(1,1), (20,1), (17,2), (26,5), (4,7), (1,9), (13,10), (11,11), (27,11), (25,12)]
+
 
     elif self.holidays == "by":
       feiertage_2007 = [(1,1), (6,1), (6,4), (9,4), (1,5), (17,5), (28,5), (7,6), (15,8), (3,10), (1,11), (25,12), (26,12)]
@@ -565,6 +674,12 @@ class Calendar(object):
     week_2011 = [(), (5, 31), (1, 28), (1, 31), (4, 30), (6, 31), (2, 30), (4, 31), (0, 31), (3, 30), (5, 31), (1, 30), (3, 31)]
     week_2012 = [(), (6, 31), (2, 29), (3, 31), (6, 30), (1, 31), (4, 30), (6, 31), (2, 31), (5, 30), (0, 31), (3, 30), (5, 31)]
     week_2013 = [(), (1, 31), (4, 28), (4, 31), (0, 30), (2, 31), (5, 30), (0, 31), (3, 31), (6, 30), (1, 31), (4, 30), (6, 31)]
+    week_2014 = [(), (2, 31), (5, 28), (5, 31), (1, 30), (3, 31), (6, 30), (1, 31), (4, 31), (0, 30), (2, 31), (5, 30), (0, 31)]
+    week_2015 = [(), (3, 31), (6, 28), (6, 31), (2, 30), (4, 31), (0, 30), (2, 31), (5, 31), (1, 30), (3, 31), (6, 30), (1, 31)]
+    week_2016 = [(), (4, 31), (0, 29), (1, 31), (4, 30), (6, 31), (2, 30), (4, 31), (0, 31), (3, 30), (5, 31), (1, 30), (3, 31)]
+    week_2017 = [(), (6, 31), (2, 28), (2, 31), (5, 30), (0, 31), (3, 30), (5, 31), (1, 31), (4, 30), (6, 31), (2, 30), (4, 31)]
+    week_2018 = [(), (0, 31), (3, 28), (3, 31), (6, 30), (1, 31), (4, 30), (6, 31), (2, 31), (5, 30), (0, 31), (3, 30), (5, 31)]
+
     if self.year == "2008":
       weeks = week_2008
     if self.year == "2009":
@@ -582,16 +697,25 @@ class Calendar(object):
     if self.year == "2013":
       weeks = week_2013
       feiertage = feiertage_2013
+    if self.year == "2014":
+      weeks = week_2014
+      feiertage = feiertage_2014
+    if self.year == "2015":
+      weeks = week_2015
+      feiertage = feiertage_2015
+    if self.year == "2018":
+      weeks = week_2018
+      feiertage = feiertage_2018
 
     draw = self.draw
     font = ImageFont.truetype("%s" %self.fontname, self.week_fontsize)
     i = 0
-    for day in week_days:
+    for day in week_days: #this draws the letters denoting day of the week mo, tu, we
       i += 1
       text = day
       txt_size = draw.textsize(text, font=font)
-      x = int((self.width/(len(week_days)+1) * i) - (txt_size[0]/2))
-      y  = int(self.height * self.week_begin)
+      x = int(round((self.width/(len(week_days)+1) * i)) - (txt_size[0]/2))
+      y = int(round(self.height * self.week_begin))
       txt_col = self.week_col
       if i == 7: txt_col = self.special_day_col
       if i == 6: txt_col = self.special_day_col_sat
@@ -614,8 +738,9 @@ class Calendar(object):
       if i == 6: txt_col = self.special_day_col_sat
       if (j, self.mcount) in feiertage:
         txt_col = self.feiertag_day_col
-      x = int((self.width/(len(week_days)+1) * i) - (txt_size[0]/2))
-      y  = int(self.height * self.week_days) + row * txt_size[1] * 1.4
+      x = int(round((self.width/(len(week_days)+1) * i)) - (txt_size[0]/2))
+#      y  = int(self.height * self.week_days) + row * txt_size[1] * 1.4 #with PIL this one works
+      y  = int(round(self.height * self.week_days)) + row * 35 * 2.35 * self.scaling_y#with pillow different height is returned for 15 and 25 (!)
       draw.text((x, y), "%s" %text, font=font, fill=txt_col)
       i += 1
 
@@ -625,9 +750,10 @@ class Calendar(object):
     im = Image.open(self.image_src)
     orig_width = im.size[0]
     orig_height = im.size[1]
-    new_width = self.width - (self.border_sides *2)
-    new_height = (orig_height/orig_width) * new_width
-    #im = im.resize((int(new_width), int(new_height)))
+    new_width = int(round(self.width - (self.border_sides *2)))
+    new_height = int(round((orig_height/orig_width) * new_width))
+    if orig_width != self.images_src_width:
+      im = im.resize(new_width, new_height)
     self.image_width = int(new_width)
     self.image_height = int(new_height)
     self.make_border(im, 2)
@@ -677,9 +803,9 @@ class Calendar(object):
       #im = ImageChops.constant(im, grain)
 
     #self.image.paste(n, (int((self.width * 0.15)/2),int(self.image_top * self.height)))
-    self.image.paste(im, (int(self.border_sides),int(self.border_top)))
+    self.image.paste(im, (int(round(self.border_sides)),int(round(self.border_top))))#fudge
     tn_width = self.tn_width
-    self.tn_size = (int(tn_width), int(tn_width * (self.image_height/self.image_width)))
+    self.tn_size = (int(round(tn_width)), int(round((tn_width * (self.image_height/self.image_width)))))
     tn = im.resize(self.tn_size)
     self.thumbnails.setdefault(self.mcount, (tn, self.iptc[self.image_src]))
 
@@ -690,22 +816,25 @@ class Calendar(object):
     h = im.size[1]
     border_col = (0,0,0)
     draw = ImageDraw.Draw(im)
+
     begin = (0, 0)
-    end = (w, 0)
+    end = (w + width, 0)
     try:
       draw.line((begin ,end), fill=border_col, width=border_width)
     except:
       border_col = (0)
       draw.line((begin ,end), fill=border_col, width=border_width)
 
-    begin = (-1, 0)
-    end = (-1, h)
+    begin = (0, 0)
+    end = (0, h + width)
     draw.line((begin ,end), fill=border_col, width=border_width)
-    begin = (w, 0)
-    end = (w, h )
+
+    begin = (w-width, 0)
+    end = (w-width, h)
     draw.line((begin ,end), fill=border_col, width=border_width)
-    begin = (0, h )
-    end = (w, h)
+    begin = (0, h-width)
+
+    end = (w, h-width)
     draw.line((begin ,end), fill=border_col, width=border_width)
 
   def iptc_extract(self, image_path):
@@ -736,12 +865,14 @@ class Calendar(object):
     else:
       self.iptc.setdefault(image_path,{})
       print "NO METADATA for %s" %image_path
-    
+
 def belongs_to_from_file(year):
   belongs_to_from_file = {}
-  rFile = open("%s_belongs_to.txt"%year,'r')
+  rFile = open("%s_belongs_to.txt"%year,'rb')
   fi = rFile.readlines()
   for line in fi:
+    if line.startswith('\xef\xbb\xbf'):
+      continue
     if line.startswith('#'):
       continue
     line = line.strip()
@@ -1014,7 +1145,7 @@ of the flight can be found at http://maps.google.com/maps/ms?ie=UTF&msa=0&msid=1
     'name':
       'Aileen',
     'belongs_to':
-      ['Cath-english.sc'],
+      ['Cath-english.en'],
     'calendar_caption':
       "",
     'print_location_index':
@@ -1084,9 +1215,7 @@ of the flight can be found at http://maps.google.com/maps/ms?ie=UTF&msa=0&msid=1
     'name':
       'Sheep',
     'belongs_to':
-      ['Oleg-english.en'],
-    'calendar_caption':
-      "All these sheep were seen on various trips to the Pennines, to the East of Durham.",
+      ['Oleg-english.en', 'SuzieSimon-english.en'],
     'print_location_index':
       ['location',
        'city',
@@ -1223,7 +1352,7 @@ of the flight can be found at http://maps.google.com/maps/ms?ie=UTF&msa=0&msid=1
 
   Durham = {
     'name':
-      'County Durham',
+      'Durham',
     'belongs_to':
       [],
     'calendar_caption':
@@ -1309,13 +1438,122 @@ of the flight can be found at http://maps.google.com/maps/ms?ie=UTF&msa=0&msid=1
       [],
     }
 
+  Joy = {
+    'name':'Joy',
+    'belongs_to':
+      [],
+    }
+
+
+
   Kalliope = {
     'name':'Kalliope',
     'belongs_to':
       [],
     }
 
+  Symmetry = {
+    'name':'Symmetry',
+    'belongs_to':
+      [],
+    }
 
+  Workshops = {
+    'name':'Workshops',
+    'belongs_to':
+      [],
+    }
+
+
+  Forests = {
+    'name':'Forests',
+    'belongs_to':
+      [],
+    }
+
+  Colourless = {
+    'name':'Colourless',
+    'belongs_to':
+      [],
+    }
+
+  Colour = {
+    'name':'Colour',
+    'belongs_to':
+      [],
+    }
+
+  Lumiere = {
+    'name':'Lumiere',
+    'belongs_to':
+      [],
+    }
+
+  MountainScape = {
+    'name':'MountainScape',
+    'belongs_to':
+      [],
+    }
+
+
+  Zoo = {
+    'name':'Zoo',
+    'belongs_to':
+      [],
+    }
+
+
+  DK = {
+    'name':'DK',
+    'belongs_to':
+      [],
+    }
+
+  ThomasP= {
+    'name':'ThomasP',
+    'belongs_to':
+      [],
+    }
+
+  Reflections = {
+    'name':'Reflections',
+    'belongs_to':
+      [],
+    }
+
+  Tellez = {
+    'name':'Tellez',
+    'belongs_to':
+      [],
+    }
+
+
+  Rovinj = {
+    'name':'Rovinj',
+    'belongs_to':
+      [],
+    }
+
+
+  EMBypass = {
+    'name':'EMBypass',
+    'belongs_to':
+      [],
+    }
+
+
+  Hanoi = {
+    'name':'Hanoi',
+    'belongs_to':
+      [],
+    }
+
+
+  Scotland = {
+    'name':'Scotland',
+    'belongs_to':
+      [],
+    }
 
   Lumiere= {
     'name':
@@ -1327,6 +1565,14 @@ of the flight can be found at http://maps.google.com/maps/ms?ie=UTF&msa=0&msid=1
     'print_location_index':
     ['location']
   }
+
+  Olex2Structures= {
+    'name':
+      'Olex2Structures',
+    'belongs_to':
+      [],
+  }
+
 
   #Callist = EasterInAmorgos
   #Callist = Sheep
@@ -1348,17 +1594,18 @@ of the flight can be found at http://maps.google.com/maps/ms?ie=UTF&msa=0&msid=1
   #Callist = TheBooths
   Callist = FellEnd
 
+#  for Callist in [Durham, Chora]:
   for Callist in [Durham]:
 #  for Callist in [Sheep, Green, North_Pennines, Lake_District, Numbers, Auerbergland, Lumiere, Amorgos, Aileen]:
 
     name = Callist['name']
     #calendar_caption = Callist['calendar_caption']
     #print_location_in_index = Callist['print_location_index']
-    year = "2013"
+    year = "2018"
     a = belongs_to_from_file(year)
     d = a[name]
     Callist['belongs_to'].append(a[name]['stamp'])
-  
+
     for cal_name in Callist['belongs_to']:
       belongs_to = cal_name.split("-")[0]
       if "-" in cal_name:
@@ -1371,19 +1618,23 @@ of the flight can be found at http://maps.google.com/maps/ms?ie=UTF&msa=0&msid=1
           belongs_to = cal_name.split(".")[1]
         else:
           cal_name = name
-  
+
       if "." in cal_name:
         belongs_to = cal_name.split('.')[1]
-  
-      basedir = 'R:/Users/Horst/Pictures/Output/Calendars/'
-      output_dir = 'R:/Users/Horst/Pictures/Output/Calendars/'
-  
+
+      basedir = 'E:/Users/Horst/Pictures/Output/Calendars/'
+      output_dir = 'E:/Users/Horst/Pictures/Output/Calendars/'
+
+      basedir = 'S:\HP\PythonScripts'
+      output_dir = 'S:\HP\PythonScripts'
+
+
       try:
         print u"++++++++++++++++++++\n\nMaking '%s' for %s" %(cal_name, belongs_to)
       except:
         print "error printing names"
       print u"Making Calendar"
-      year = "2013"
+      year = "2018"
       bw = False
       feiertage = True
       a = Calendar(year = year, language = language, cal_name = cal_name, basedir = basedir, bw = bw, feiertage = feiertage, belongs_to = belongs_to, holidays = holidays, output_dir = output_dir, d=d)

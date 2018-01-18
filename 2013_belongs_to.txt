@@ -2,7 +2,7 @@
 stamp=FellEnd-english.en
 
 [County Durham]
-stamp=Durham-german.de
+stamp=Durham-english.sc
 title=County Durham
 caption=County Durham is in the North East of England, with a population of about half a million people. Durham Cathedral is a UNESCO World Heritage Site and dates back to the 10th century. 
 #ad_image=olexsys$R
@@ -55,19 +55,71 @@ title=Kalliope
 caption=Visiting Kalliope in Chora, Amorgos in September 2012.
 
 [Munich]
-stamp=Munich-german.de
+stamp=Munich-english.en
 title=Munich
 caption=A few days at a conference (held at the LMU) in Munich in March 2012.
 
 
 
 [Chora]
-stamp=Chora-greek.nz
+stamp=Chora-german.de
 title=Chora
 caption=Chora, Amorgos in September 2012.
 
+[Aileen]
+stamp=Aileen-english.sc
+title=Aileen
+caption= 
+idx_0=Profitis Ilias, Amorgos
+idx_1=CDG Airport, Paris
+idx_2=Sherburn Village
+idx_3=Sherburn Village
+idx_4=Sherburn Village
+idx_5=Chesters, Hadrian's Wall
+idx_6=Durham Miners' Gala
+idx_7=Crimdon Dene
+idx_8=Sherburn Village
+idx_9=Profitis Ilias, Amorgos
+idx_10=Chora, Amorgos
+idx_11=Sherburn Village
+idx_12=Beamish Museum
+
+
+
+[Joy]   
+stamp=Joy-german.de
+title=Joy
+caption=Some impressions from visiting Big Cities in the far east - Japan, Hong Kong and China.
+idx_0=Nara, near Osaka, Japan.
+idx_1=Guangzhou, Southern China
+idx_2=Osaka, Japan.
+idx_3=Guangzhou, China.
+idx_4=Beijing, China
+idx_5=Osaka Railway Station, Japan
+idx_6=Hong Kong
+idx_7=Osaka, Japan
+idx_8=Osaka Railway Station
+idx_9=Fuzhou, South-East China
+idx_10=Guangzhou, Southern China
+idx_11=Hong Kong
+idx_12=Guangzhou, Southern China
+cap_0=Nara, near Osaka, Japan.
+cap_1=Guangzhou (formerly also known as Kanton) in Southern China.
+cap_2=Osaka, Japan. Near the main railway station.
+cap_3=Student flats in Guangzhou, Southern China.
+cap_4=Beijing, China.
+cap_5=Osaka Railway Station, Japan.
+cap_6=Taken from an upstair's seat in a Hong Kong bus.
+cap_7=Osaka, Japan.
+cap_8=Osaka Railway Station.
+cap_9=Fuzhou, South-East China.
+cap_10=Guangzhou, Southern China.
+cap_11=Taken from an upstair's seat in a Hong Kong bus.
+cap_12=Guangzhou, Southern China.
+
+
 [Donkeys]
-stamp=Donkeys-english.en
+stamp=Donkeys-german.de
 title=Donkeys
 caption=All of these were photographed in Chora, Amorgos. Some a very long time agao.
 
@@ -82,7 +134,7 @@ caption=A week at a conference in Boston's Wharf district didn't really allow fo
 
 
 [Sheep]
-stamp=Sheep-english.en
+stamp=Sheep-german.de
 title=Sheep
 caption=This year's selection consists of sheep in two locations: Fell and Hadrian's Wall at Housesteads. All of them were photographed at the height of British summer.
 
@@ -94,7 +146,7 @@ name=Nanning
 caption=Nanning, in Southern China is a city of over 3 million people that few will ever have heard of before. These images were taken during a 3-day visit to this city.
 
 [Jyvaskyla]
-stamp=Jyvaskyla-english.en
+stamp=Jyvaskyla-english.de
 title=Jyväskylä
 name=Jyvaskyla
 ad_image=olexsys$R
